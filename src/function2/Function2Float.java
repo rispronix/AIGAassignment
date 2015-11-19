@@ -22,7 +22,7 @@ import selection.TournamentSelection;
  * @author r2-rowley
  */
 public class Function2Float {
-    
+
     private final FitnessFunction ff;
     private final FitnessComparator comparator;
     private final BaseChromosomeFactory chromosomeFactory;
@@ -37,7 +37,7 @@ public class Function2Float {
     private Population population;
 
     public Function2Float(Random seed) {
-        
+
         /*
          minimise x^2 + y^2
          */

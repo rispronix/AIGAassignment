@@ -17,7 +17,7 @@ import selection.TournamentSelection;
  * @author rich
  */
 public class Function3 {
-    
+
     private final FitnessFunction ff;
     private final FitnessComparator comparator;
     private final BaseChromosomeFactory chromosomeFactory;
@@ -31,7 +31,7 @@ public class Function3 {
     private final double mutationProbability = 0.05;
     private Population population;
 
-    public Function3(Random seed) {        
+    public Function3(Random seed) {
         /*
          minimise ...
          */
@@ -43,7 +43,7 @@ public class Function3 {
             }
             return result;
         };
-        
+
         /*
          define comparator to prefer lower valued fitnesses
          */

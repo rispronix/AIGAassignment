@@ -72,11 +72,11 @@ public class Function1 {
                 }.initialise();
             }
         };
-        
+
         /*
-        Define Factory to produce population with predefined
-        population size and chromosome factory
-        */
+         Define Factory to produce population with predefined
+         population size and chromosome factory
+         */
         PopulationFactory populationFactory = new PopulationFactory() {
 
             @Override
@@ -96,8 +96,8 @@ public class Function1 {
         };
 
         /*
-        define selection, recombination, and mutation operations
-        */
+         define selection, recombination, and mutation operations
+         */
         s = new TournamentSelection(seed, comparator, populationFactory);
         r = new Recombination(seed, populationFactory, recombinationProbability);
         m = new BaseMutation(seed, mutationProbability) {
@@ -111,19 +111,19 @@ public class Function1 {
         };
 
         /*
-        create starting population
-        */
+         create starting population
+         */
         population = populationFactory.createNew();
         population.calculateAverageFitness();
         System.out.println("\nFunction1: binary encoding");
-        System.out.println("starting population: "+population.toString());
+        System.out.println("starting population: " + population.toString());
 
         /*
-        initialise placeholder chromosome for best candidate solution so far
-        */
+         initialise placeholder chromosome for best candidate solution so far
+         */
         BaseChromosome best = chromosomeFactory.createNew();
         best.calculateFitness();
-        
+
         // loop evolution
         for (int i = 0; i < 100; i++) {
             population = s.select(population);
@@ -132,8 +132,8 @@ public class Function1 {
             population.calculateAverageFitness();
             best = population.findBest(comparator, best);
         }
-        System.out.println("final population: "+population.toString());
-        System.out.println("best candidate solution: "+best.toString());
+        System.out.println("final population: " + population.toString());
+        System.out.println("best candidate solution: " + best.toString());
         System.out.println("population average fitness: " + population.averageFitness());
     }
 }

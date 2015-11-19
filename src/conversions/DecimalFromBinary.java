@@ -3,7 +3,8 @@ package conversions;
 /**
  * Created by rich on 20/10/15.
  */
-public class DecimalFromBinary <T>{
+public class DecimalFromBinary<T> {
+
     public float decimalFromBinary(T[] c) {
         float decimalValue = 0;
         int size = c.length;

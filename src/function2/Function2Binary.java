@@ -18,7 +18,7 @@ import selection.TournamentSelection;
  * @author rich
  */
 public class Function2Binary {
-    
+
     private final FitnessFunction ff;
     private final DecimalFromBinary dfb = new DecimalFromBinary();
     private final int geneQty = 12;// binary string to represent two values -15 to 15
