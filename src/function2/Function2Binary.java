@@ -2,12 +2,10 @@ package function2;
 
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
-import comparators.CompareMax;
 import comparators.CompareMin;
 import comparators.FitnessComparator;
 import conversions.DecimalFromBinary;
 import fitness.FitnessFunction;
-import java.util.Arrays;
 import java.util.Random;
 import mutation.BaseMutation;
 import population.Population;
@@ -20,7 +18,7 @@ import selection.TournamentSelection;
  * @author rich
  * @param <T>
  */
-public class Function2<T> {
+public class Function2Binary {
 
         private final Random seed = new Random(System.currentTimeMillis());
 //    private final Random seed = new Random(1);//debug
@@ -29,23 +27,17 @@ public class Function2<T> {
     private final BaseChromosomeFactory chromosomeFactory;
     private Population population;
     private final int populationSize = 10;// arbitrary and modifiable 
-    private final FitnessComparator comparator;// higher = better
+    private final FitnessComparator comparator;// lower = better
     private final TournamentSelection s;
     private final Recombination r;
     private final double recombinationProbability = 0.5;
     private final BaseMutation m;
     private final double mutationProbability = 0.05;
 
-    public Function2() {
+    public Function2Binary() {
         /*
          maximise x^2
          */
-//        ff = (BaseChromosome c) -> {
-//            DecimalFromBinary dfb = new DecimalFromBinary();
-//            float x = dfb.decimalFromBinary(c.getGenes(0, 5)) - 15;
-//            float y = dfb.decimalFromBinary(c.getGenes(5, c.size())) - 15;
-//            return c.setFitness((float) 0.26 * (x * x * y * y) - 0.48 * x * y);
-//        }
         DecimalFromBinary dfb = new DecimalFromBinary();
         ff = (BaseChromosome c) -> {
             float x = dfb.decimalFromBinary(c.getGenes(0, 5)) - 15;
@@ -112,14 +104,14 @@ public class Function2<T> {
         System.out.println(population.toString());
 
         s = new TournamentSelection(seed, comparator, populationFactory);
-        population = s.select(population);
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
+//        population = s.select(population);
+//        population.calculateAverageFitness();
+//        System.out.println(population.toString());
 
         r = new Recombination(seed, populationFactory, recombinationProbability);
-        population = r.singlepointCrossover(population);
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
+//        population = r.singlepointCrossover(population);
+//        population.calculateAverageFitness();
+//        System.out.println(population.toString());
 
         m = new BaseMutation(seed, mutationProbability) {
 
@@ -132,8 +124,8 @@ public class Function2<T> {
         };
 
         population = m.mutate(population);
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
+//        population.calculateAverageFitness();
+//        System.out.println(population.toString());
 
         BaseChromosome best = chromosomeFactory.createNew();
         best.calculateFitness();

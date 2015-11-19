@@ -103,14 +103,14 @@ public class Function1<T> {
         System.out.println(population.toString());
 
         s = new TournamentSelection(seed, comparator, populationFactory);
-        population = s.select(population);
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
+//        population = s.select(population);
+//        population.calculateAverageFitness();
+//        System.out.println(population.toString());
 
         r = new Recombination(seed, populationFactory, recombinationProbability);
-        population = r.singlepointCrossover(population);
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
+//        population = r.singlepointCrossover(population);
+//        population.calculateAverageFitness();
+//        System.out.println(population.toString());
 
         m = new BaseMutation(seed, mutationProbability) {
 
@@ -123,8 +123,8 @@ public class Function1<T> {
         };
 
         population = m.mutate(population);
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
+//        population.calculateAverageFitness();
+//        System.out.println(population.toString());
 
         BaseChromosome best = chromosomeFactory.createNew();
         best.calculateFitness();
