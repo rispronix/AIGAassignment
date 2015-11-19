@@ -38,7 +38,11 @@ public class Function1<T> {
         /*
          maximise x^2
          */
-        ff = (BaseChromosome c) -> (float) Math.pow(DecimalFromBinary.decimalFromBinary(c), 2);
+        DecimalFromBinary dfb = new DecimalFromBinary();
+        ff = (BaseChromosome c) -> {
+            return (float) Math.pow(dfb.decimalFromBinary(c.getGenes(0, geneQty)), 2);
+        };
+
 
         /*
          define factory to produce binary string chromosomes with predefined
@@ -134,6 +138,6 @@ public class Function1<T> {
         }
         System.out.println(population.toString());
         System.out.println(best.toString());
-        System.out.println("average: "+population.averageFitness());
+        System.out.println("average: " + population.averageFitness());
     }
 }

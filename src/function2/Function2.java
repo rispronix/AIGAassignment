@@ -3,9 +3,11 @@ package function2;
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
 import comparators.CompareMax;
+import comparators.CompareMin;
 import comparators.FitnessComparator;
 import conversions.DecimalFromBinary;
 import fitness.FitnessFunction;
+import java.util.Arrays;
 import java.util.Random;
 import mutation.BaseMutation;
 import population.Population;
@@ -18,12 +20,12 @@ import selection.TournamentSelection;
  * @author rich
  * @param <T>
  */
-public class Function2 <T> {
+public class Function2<T> {
 
-//        private final Random seed = new Random(System.currentTimeMillis());
-    private final Random seed = new Random(1);//debug
+        private final Random seed = new Random(System.currentTimeMillis());
+//    private final Random seed = new Random(1);//debug
     private final FitnessFunction ff;
-    private final int geneQty = 6;// binary string to represent values -15 to 15
+    private final int geneQty = 12;// binary string to represent two values -15 to 15
     private final BaseChromosomeFactory chromosomeFactory;
     private Population population;
     private final int populationSize = 10;// arbitrary and modifiable 
@@ -38,7 +40,18 @@ public class Function2 <T> {
         /*
          maximise x^2
          */
-        ff = (BaseChromosome c) -> (float) Math.pow(DecimalFromBinary.decimalFromBinary(c)-15, 2);
+//        ff = (BaseChromosome c) -> {
+//            DecimalFromBinary dfb = new DecimalFromBinary();
+//            float x = dfb.decimalFromBinary(c.getGenes(0, 5)) - 15;
+//            float y = dfb.decimalFromBinary(c.getGenes(5, c.size())) - 15;
+//            return c.setFitness((float) 0.26 * (x * x * y * y) - 0.48 * x * y);
+//        }
+        DecimalFromBinary dfb = new DecimalFromBinary();
+        ff = (BaseChromosome c) -> {
+            float x = dfb.decimalFromBinary(c.getGenes(0, 5)) - 15;
+            float y = dfb.decimalFromBinary(c.getGenes(5, c.size())) - 15;
+            return (float) (0.26 * (x * x * y * y) - 0.48 * x * y);
+        };
 
         /*
          define factory to produce binary string chromosomes with predefined
@@ -73,7 +86,7 @@ public class Function2 <T> {
 //        population = new Population(populationSize, chromosomeFactory);
 //        population.calculateAverageFitness();
 //        System.out.println(population.toString());
-        comparator = new CompareMax();
+        comparator = new CompareMin();
 //        System.out.println(comparator.compare(population.getElement(0), population.getElement(1)));
 
         PopulationFactory populationFactory = new PopulationFactory() {
