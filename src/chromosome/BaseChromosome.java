@@ -9,8 +9,8 @@ import java.util.Arrays;
  */
 public abstract class BaseChromosome<T> {
 
-    protected float fitness;
     protected T[] genes;
+    protected float fitness;
 
     public abstract BaseChromosome initialise();
 
@@ -20,6 +20,10 @@ public abstract class BaseChromosome<T> {
         for (int i = 0; i < c.size(); i++) {
             genes[i] = (T) c.getGene(i);
         }
+    }
+    
+    public void setGene(int index, T value){
+        genes[index]=value;
     }
 
     public T getGene(int i) {

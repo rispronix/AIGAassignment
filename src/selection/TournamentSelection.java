@@ -1,9 +1,10 @@
 package selection;
 
-import chromosome.BaseChromosome;
 import java.util.Random;
+import chromosome.BaseChromosome;
 import comparators.FitnessComparator;
 import population.Population;
+import population.PopulationFactory;
 
 /**
  *
@@ -13,20 +14,25 @@ public class TournamentSelection {
 
     private final Random seed;
     private final FitnessComparator comparator;
+    private final PopulationFactory populationFactory;
 
-    public TournamentSelection(Random seed, FitnessComparator comparator) {
+    public TournamentSelection(Random seed,
+            FitnessComparator comparator,
+            PopulationFactory populationFactory) {
         this.seed = seed;
         this.comparator = comparator;
+        this.populationFactory = populationFactory;
     }
 
     public Population select(Population population) {
-        Population newPopulation = new Population(population.size());
-        for (int i = 0; i < newPopulation.size(); i++) {
-            int index1 = seed.nextInt(population.size());
-            int index2 = seed.nextInt(population.size());
-            population.set(i, select(population.getElement(index1), population.getElement(index2 + 1 % population.size()-1)));
+//        population = populationFactory.createCopy(population);
+        Population newp = populationFactory.createNew();
+        for (int i = 0; i < population.size(); i++) {
+            newp.set(i, select(
+                    population.getElement(seed.nextInt(population.size())),
+                    population.getElement(seed.nextInt(population.size()))));
         }
-        return newPopulation;
+        return newp;
     }
 
     public BaseChromosome select(BaseChromosome c1, BaseChromosome c2) {
