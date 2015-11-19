@@ -17,7 +17,7 @@ import mutation.BaseMutation;
  *
  * @author rich
  */
-public class Function1 <T>{
+public class Function1<T> {
 
 //    private final Random seed = new Random(System.currentTimeMillis());
     private final Random seed = new Random(1);//debug
@@ -107,19 +107,41 @@ public class Function1 <T>{
         population = r.singlepointCrossover(population);
         population.calculateAverageFitness();
         System.out.println(population.toString());
-        
-        m = new BaseMutation(seed,mutationProbability) {
+
+        m = new BaseMutation(seed, mutationProbability) {
 
             @Override
             public BaseChromosome mutateGene(BaseChromosome c) {
                 int index = seed.nextInt(geneQty);
-                c.setGene(index, 1-(int) c.getGene(index));
+                c.setGene(index, 1 - (int) c.getGene(index));
                 return c;
             }
-        };   
-        
-        population=m.mutate(population);
+        };
+
+        population = m.mutate(population);
         population.calculateAverageFitness();
         System.out.println(population.toString());
+
+        BaseChromosome best = chromosomeFactory.createNew();
+        best.calculateFitness();
+        // loop evolution
+        for (int i = 0; i < 100; i++) {
+            population = s.select(population);
+            population = r.singlepointCrossover(population);
+            population = m.mutate(population);
+            population.calculateAverageFitness();
+            best = findBest(best,population);
+        }
+        System.out.println(population.toString());
+        System.out.println(best.toString());
+    }
+
+    public BaseChromosome findBest(BaseChromosome best, Population population) {
+        for (int i = 0; i < population.size(); i++) {
+            if (comparator.compare(population.getElement(i), best) > 0) {
+                best = population.getElement(i);
+            }
+        }
+        return best;
     }
 }

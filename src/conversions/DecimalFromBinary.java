@@ -1,6 +1,6 @@
-package util;
+package conversions;
 
-import chromosome.BaseChromosome;
+import chromosomes.BaseChromosome;
 
 
 /**

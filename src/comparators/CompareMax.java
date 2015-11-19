@@ -1,6 +1,6 @@
 package comparators;
 
-import chromosome.BaseChromosome;
+import chromosomes.BaseChromosome;
 
 /**
  *

@@ -1,6 +1,6 @@
 package recombination;
 
-import chromosome.BaseChromosome;
+import chromosomes.BaseChromosome;
 import java.util.Random;
 import population.Population;
 import population.PopulationFactory;

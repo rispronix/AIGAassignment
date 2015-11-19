@@ -1,6 +1,6 @@
 package fitness;
 
-import chromosome.BaseChromosome;
+import chromosomes.BaseChromosome;
 
 
 /**

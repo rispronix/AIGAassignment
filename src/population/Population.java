@@ -1,7 +1,7 @@
 package population;
 
-import chromosome.BaseChromosome;
-import chromosome.BaseChromosomeFactory;
+import chromosomes.BaseChromosome;
+import chromosomes.BaseChromosomeFactory;
 import java.util.Arrays;
 
 /**

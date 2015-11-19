@@ -14,15 +14,13 @@ import population.PopulationFactory;
  *
  * @author r2-rowley
  */
-public abstract class Mutation {
+public abstract class BaseMutation {
 
     private final Random seed;
-    private final PopulationFactory populationFactory;
     private final double probability;
 
-    public Mutation(Random seed, PopulationFactory populationFactory, double probability) {
+    public BaseMutation(Random seed, double probability) {
         this.seed = seed;
-        this.populationFactory = populationFactory;
         this.probability = probability;
     }
 

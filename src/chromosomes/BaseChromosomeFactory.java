@@ -1,4 +1,4 @@
-package chromosome;
+package chromosomes;
 
 /**
  *
