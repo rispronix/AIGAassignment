@@ -9,7 +9,6 @@ import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
 import comparators.CompareMin;
 import comparators.FitnessComparator;
-import conversions.DecimalFromBinary;
 import fitness.FitnessFunction;
 import java.util.Random;
 import mutation.BaseMutation;
@@ -23,31 +22,34 @@ import selection.TournamentSelection;
  * @author r2-rowley
  */
 public class Function2Float {
-
-        private final Random seed = new Random(System.currentTimeMillis());
-//    private final Random seed = new Random(1);//debug
+    
     private final FitnessFunction ff;
-    private final int geneQty = 2;// two float typed variables
+    private final FitnessComparator comparator;
     private final BaseChromosomeFactory chromosomeFactory;
-    private Population population;
-    private final int populationSize = 10;// arbitrary and modifiable 
-    private final FitnessComparator comparator;// lower = better
     private final TournamentSelection s;
     private final Recombination r;
-    private final double recombinationProbability = 0.5;
     private final BaseMutation m;
+    private final int generationCount = 100;
+    private final int geneQty = 2;// two float typed variables
+    private final int populationSize = 10;// arbitrary and modifiable 
+    private final double recombinationProbability = 0.5;
     private final double mutationProbability = 0.05;
+    private Population population;
 
-    public Function2Float() {
+    public Function2Float(Random seed) {
+        
         /*
-         maximise x^2
+         minimise x^2 + y^2
          */
-        DecimalFromBinary dfb = new DecimalFromBinary();
         ff = (BaseChromosome c) -> {
-            float x =(float) c.getGene(0);
+            float x = (float) c.getGene(0);
             float y = (float) c.getGene(1);
             return (float) (0.26 * (x * x * y * y) - 0.48 * x * y);
         };
+        /*
+         define comparator to prefer lower valued fitnesses
+         */
+        comparator = new CompareMin();
 
         /*
          define factory to produce binary string chromosomes with predefined
@@ -76,15 +78,10 @@ public class Function2Float {
             }
         };
 
-//        BaseChromosome chromosome1 = chromosomeFactory.createNew();
-//        chromosome1.calculateFitness();
-//        System.out.println(chromosome1.toString());
-//        population = new Population(populationSize, chromosomeFactory);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-        comparator = new CompareMin();
-//        System.out.println(comparator.compare(population.getElement(0), population.getElement(1)));
-
+        /*
+         Define factory to produce populations with predefined
+         population size and chromosome factory
+         */
         PopulationFactory populationFactory = new PopulationFactory() {
 
             @Override
@@ -96,53 +93,56 @@ public class Function2Float {
             public Population createCopy(Population population) {
                 Population newPopulation = new Population(populationSize);
                 for (int i = 0; i < populationSize; i++) {
-                    newPopulation.set(i, chromosomeFactory.createCopy(population.getElement(i)));
+                    newPopulation.set(i, chromosomeFactory.createCopy(population.get(i)));
 
                 }
                 return newPopulation;
             }
         };
 
-        population = populationFactory.createNew();
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
-
+        /*
+         define selection, recombination, and mutation operators
+         */
         s = new TournamentSelection(seed, comparator, populationFactory);
-//        population = s.select(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-
         r = new Recombination(seed, populationFactory, recombinationProbability);
-//        population = r.singlepointCrossover(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-
         m = new BaseMutation(seed, mutationProbability) {
 
             @Override
             public BaseChromosome mutateGene(BaseChromosome c) {
                 int index = seed.nextInt(geneQty);
-                c.setGene(index, (float)c.getGene(index) + (float)seed.nextGaussian()/2);
+                c.setGene(index, (float) c.getGene(index) + (float) seed.nextGaussian() / 2);
                 return c;
             }
         };
 
-//        population = m.mutate(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
+        /*
+         create starting population
+         */
+        population = populationFactory.createNew();
+        population.calculateAverageFitness();
+        System.out.println("\nFunction2: floating point encoding");
+        System.out.println("starting population: " + population.toString());
 
+        /*
+         initialise placeholder chromosome for best candidate solution so far
+         */
         BaseChromosome best = chromosomeFactory.createNew();
         best.calculateFitness();
+
         // loop evolution
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < generationCount; i++) {
             population = s.select(population);
             population = r.singlepointCrossover(population);
             population = m.mutate(population);
             population.calculateAverageFitness();
             best = population.findBest(comparator, best);
         }
-        System.out.println(population.toString());
-        System.out.println(best.toString());
-        System.out.println("average: " + population.averageFitness());
+
+        /*
+         display results
+         */
+        System.out.println("final population: " + population.toString());
+        System.out.println("best candidate solution: " + best.toString());
+        System.out.println("population average fitness: " + population.averageFitness());
     }
 }

@@ -3,6 +3,8 @@ package main;
 import function1.Function1;
 import function2.Function2Binary;
 import function2.Function2Float;
+import function3.Function3;
+import java.util.Random;
 
 /**
  *
@@ -10,8 +12,13 @@ import function2.Function2Float;
  */
 public class Main {
     public static void main(String[] args){
-        new Function1();
-        new Function2Binary();
-        new Function2Float();
+        
+//        Random seed = new Random(1);
+        Random seed = new Random(System.currentTimeMillis());
+        
+        new Function1(seed);
+        new Function2Binary(seed);
+        new Function2Float(seed);
+        new Function3(seed);
     }
 }

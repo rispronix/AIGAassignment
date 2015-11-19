@@ -17,11 +17,10 @@ import mutation.BaseMutation;
  *
  * @author rich
  */
-public class Function1<T> {
+public class Function1 {
 
-    private final Random seed = new Random(System.currentTimeMillis());
-//    private final Random seed = new Random(1);//debug
     private final FitnessFunction ff;
+    private final DecimalFromBinary dfb = new DecimalFromBinary();
     private final int geneQty = 8;// binary string to represent values 0 to 255
     private final BaseChromosomeFactory chromosomeFactory;
     private Population population;
@@ -33,16 +32,19 @@ public class Function1<T> {
     private final BaseMutation m;
     private final double mutationProbability = 0.05;
 
-    public Function1() {
+    public Function1(Random seed) {
 
         /*
          maximise x^2
          */
-        DecimalFromBinary dfb = new DecimalFromBinary();
         ff = (BaseChromosome c) -> {
             return (float) Math.pow(dfb.decimalFromBinary(c.getGenes(0, geneQty)), 2);
         };
 
+        /*
+         define comparator to prefer higher valued fitnesses
+         */
+        comparator = new CompareMax();
 
         /*
          define factory to produce binary string chromosomes with predefined
@@ -70,16 +72,11 @@ public class Function1<T> {
                 }.initialise();
             }
         };
-
-//        BaseChromosome chromosome1 = chromosomeFactory.createNew();
-//        chromosome1.calculateFitness();
-//        System.out.println(chromosome1.toString());
-//        population = new Population(populationSize, chromosomeFactory);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-        comparator = new CompareMax();
-//        System.out.println(comparator.compare(population.getElement(0), population.getElement(1)));
-
+        
+        /*
+        Define Factory to produce population with predefined
+        population size and chromosome factory
+        */
         PopulationFactory populationFactory = new PopulationFactory() {
 
             @Override
@@ -91,27 +88,18 @@ public class Function1<T> {
             public Population createCopy(Population population) {
                 Population newPopulation = new Population(populationSize);
                 for (int i = 0; i < populationSize; i++) {
-                    newPopulation.set(i, chromosomeFactory.createCopy(population.getElement(i)));
+                    newPopulation.set(i, chromosomeFactory.createCopy(population.get(i)));
 
                 }
                 return newPopulation;
             }
         };
 
-        population = populationFactory.createNew();
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
-
+        /*
+        define selection, recombination, and mutation operations
+        */
         s = new TournamentSelection(seed, comparator, populationFactory);
-//        population = s.select(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-
         r = new Recombination(seed, populationFactory, recombinationProbability);
-//        population = r.singlepointCrossover(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-
         m = new BaseMutation(seed, mutationProbability) {
 
             @Override
@@ -122,12 +110,20 @@ public class Function1<T> {
             }
         };
 
-        population = m.mutate(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
+        /*
+        create starting population
+        */
+        population = populationFactory.createNew();
+        population.calculateAverageFitness();
+        System.out.println("\nFunction1: binary encoding");
+        System.out.println("starting population: "+population.toString());
 
+        /*
+        initialise placeholder chromosome for best candidate solution so far
+        */
         BaseChromosome best = chromosomeFactory.createNew();
         best.calculateFitness();
+        
         // loop evolution
         for (int i = 0; i < 100; i++) {
             population = s.select(population);
@@ -136,8 +132,8 @@ public class Function1<T> {
             population.calculateAverageFitness();
             best = population.findBest(comparator, best);
         }
-        System.out.println(population.toString());
-        System.out.println(best.toString());
-        System.out.println("average: " + population.averageFitness());
+        System.out.println("final population: "+population.toString());
+        System.out.println("best candidate solution: "+best.toString());
+        System.out.println("population average fitness: " + population.averageFitness());
     }
 }

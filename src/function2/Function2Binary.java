@@ -18,10 +18,9 @@ import selection.TournamentSelection;
  * @author rich
  */
 public class Function2Binary {
-
-        private final Random seed = new Random(System.currentTimeMillis());
-//    private final Random seed = new Random(1);//debug
+    
     private final FitnessFunction ff;
+    private final DecimalFromBinary dfb = new DecimalFromBinary();
     private final int geneQty = 12;// binary string to represent two values -15 to 15
     private final BaseChromosomeFactory chromosomeFactory;
     private Population population;
@@ -33,11 +32,10 @@ public class Function2Binary {
     private final BaseMutation m;
     private final double mutationProbability = 0.05;
 
-    public Function2Binary() {
+    public Function2Binary(Random seed) {
         /*
-         maximise x^2
+         minimise x^2 + y^2
          */
-        DecimalFromBinary dfb = new DecimalFromBinary();
         ff = (BaseChromosome c) -> {
             float x = dfb.decimalFromBinary(c.getGenes(0, 5)) - 15;
             float y = dfb.decimalFromBinary(c.getGenes(5, c.size())) - 15;
@@ -45,10 +43,10 @@ public class Function2Binary {
         };
 
         /*
-        define comparator to prefer higher valued fitnesses
-        */
+         define comparator to prefer lower valued fitnesses
+         */
         comparator = new CompareMin();
-        
+
         /*
          define factory to produce binary string chromosomes with predefined
          length and fitness function
@@ -75,11 +73,11 @@ public class Function2Binary {
                 }.initialise();
             }
         };
-        
+
         /*
-        Define factory to produce population with predefined
-        population size and chromosome factory
-        */
+         Define factory to produce population with predefined
+         population size and chromosome factory
+         */
         PopulationFactory populationFactory = new PopulationFactory() {
 
             @Override
@@ -91,16 +89,16 @@ public class Function2Binary {
             public Population createCopy(Population population) {
                 Population newPopulation = new Population(populationSize);
                 for (int i = 0; i < populationSize; i++) {
-                    newPopulation.set(i, chromosomeFactory.createCopy(population.getElement(i)));
+                    newPopulation.set(i, chromosomeFactory.createCopy(population.get(i)));
 
                 }
                 return newPopulation;
             }
         };
-        
+
         /*
-        define selection, recombination, and mutation operators
-        */
+         define selection, recombination, and mutation operators
+         */
         s = new TournamentSelection(seed, comparator, populationFactory);
         r = new Recombination(seed, populationFactory, recombinationProbability);
         m = new BaseMutation(seed, mutationProbability) {
@@ -114,19 +112,19 @@ public class Function2Binary {
         };
 
         /*
-        create starting population
-        */
+         create starting population
+         */
         population = populationFactory.createNew();
         population.calculateAverageFitness();
         System.out.println("\nFunction2: binary encoding");
-        System.out.println("starting population:"+population.toString());
+        System.out.println("starting population:" + population.toString());
 
         /*
-        initialise placeholder chromosome for best candidate solution so far
-        */
+         initialise placeholder chromosome for best candidate solution so far
+         */
         BaseChromosome best = chromosomeFactory.createNew();
         best.calculateFitness();
-        
+
         // loop evolution
         for (int i = 0; i < 100; i++) {
             population = s.select(population);
@@ -135,8 +133,8 @@ public class Function2Binary {
             population.calculateAverageFitness();
             best = population.findBest(comparator, best);
         }
-        System.out.println("final population: "+population.toString());
-        System.out.println("best candidate solution: "+best.toString());
+        System.out.println("final population: " + population.toString());
+        System.out.println("best candidate solution: " + best.toString());
         System.out.println("population average fitness: " + population.averageFitness());
     }
 }

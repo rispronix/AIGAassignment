@@ -38,7 +38,7 @@ public class Population {
         population[index] = c;
     }
 
-    public BaseChromosome getElement(int index) {
+    public BaseChromosome get(int index) {
         return population[index];
     }
 

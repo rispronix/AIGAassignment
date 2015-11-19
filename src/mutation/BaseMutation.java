@@ -27,7 +27,7 @@ public abstract class BaseMutation {
     public Population mutate(Population population) {
         for (int i = 0; i < population.size(); i++) {
             if (seed.nextDouble() < probability) {
-                population.set(i, mutateGene(population.getElement(i)));
+                population.set(i, mutateGene(population.get(i)));
             }
         }
 

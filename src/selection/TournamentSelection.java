@@ -28,8 +28,8 @@ public class TournamentSelection {
         population = populationFactory.createCopy(population);
         for (int i = 0; i < population.size(); i++) {
             population.set(i, select(
-                    population.getElement(seed.nextInt(population.size())),
-                    population.getElement(seed.nextInt(population.size()))));
+                    population.get(seed.nextInt(population.size())),
+                    population.get(seed.nextInt(population.size()))));
         }
         return population;
     }

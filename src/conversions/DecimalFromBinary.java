@@ -1,8 +1,5 @@
 package conversions;
 
-import chromosomes.BaseChromosome;
-
-
 /**
  * Created by rich on 20/10/15.
  */

@@ -29,8 +29,8 @@ public class Recombination {
         for (int i = 0; i < population.size(); i++) {
             if (seed.nextDouble() < probability) {
                 newp.set(i, singlepointCrossover(
-                        population.getElement(i),
-                        population.getElement(i + 1 % population.size() - 1)));
+                        population.get(i),
+                        population.get(i + 1 % population.size() - 1)));
             }
         }
         return newp;
