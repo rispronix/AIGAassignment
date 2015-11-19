@@ -19,8 +19,8 @@ import mutation.BaseMutation;
  */
 public class Function1<T> {
 
-//    private final Random seed = new Random(System.currentTimeMillis());
-    private final Random seed = new Random(1);//debug
+    private final Random seed = new Random(System.currentTimeMillis());
+//    private final Random seed = new Random(1);//debug
     private final FitnessFunction ff;
     private final int geneQty = 8;// binary string to represent values 0 to 255
     private final BaseChromosomeFactory chromosomeFactory;
@@ -31,7 +31,7 @@ public class Function1<T> {
     private final Recombination r;
     private final double recombinationProbability = 0.5;
     private final BaseMutation m;
-    private final double mutationProbability = 0.5;
+    private final double mutationProbability = 0.05;
 
     public Function1() {
 
@@ -130,18 +130,10 @@ public class Function1<T> {
             population = r.singlepointCrossover(population);
             population = m.mutate(population);
             population.calculateAverageFitness();
-            best = findBest(best,population);
+            best = population.findBest(comparator, best);
         }
         System.out.println(population.toString());
         System.out.println(best.toString());
-    }
-
-    public BaseChromosome findBest(BaseChromosome best, Population population) {
-        for (int i = 0; i < population.size(); i++) {
-            if (comparator.compare(population.getElement(i), best) > 0) {
-                best = population.getElement(i);
-            }
-        }
-        return best;
+        System.out.println("average: "+population.averageFitness());
     }
 }
