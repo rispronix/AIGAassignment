@@ -16,7 +16,6 @@ import selection.TournamentSelection;
 /**
  *
  * @author rich
- * @param <T>
  */
 public class Function2Binary {
 
@@ -46,6 +45,11 @@ public class Function2Binary {
         };
 
         /*
+        define comparator to prefer higher valued fitnesses
+        */
+        comparator = new CompareMin();
+        
+        /*
          define factory to produce binary string chromosomes with predefined
          length and fitness function
          */
@@ -71,16 +75,11 @@ public class Function2Binary {
                 }.initialise();
             }
         };
-
-//        BaseChromosome chromosome1 = chromosomeFactory.createNew();
-//        chromosome1.calculateFitness();
-//        System.out.println(chromosome1.toString());
-//        population = new Population(populationSize, chromosomeFactory);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-        comparator = new CompareMin();
-//        System.out.println(comparator.compare(population.getElement(0), population.getElement(1)));
-
+        
+        /*
+        Define factory to produce population with predefined
+        population size and chromosome factory
+        */
         PopulationFactory populationFactory = new PopulationFactory() {
 
             @Override
@@ -98,21 +97,12 @@ public class Function2Binary {
                 return newPopulation;
             }
         };
-
-        population = populationFactory.createNew();
-        population.calculateAverageFitness();
-        System.out.println(population.toString());
-
+        
+        /*
+        define selection, recombination, and mutation operators
+        */
         s = new TournamentSelection(seed, comparator, populationFactory);
-//        population = s.select(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-
         r = new Recombination(seed, populationFactory, recombinationProbability);
-//        population = r.singlepointCrossover(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
-
         m = new BaseMutation(seed, mutationProbability) {
 
             @Override
@@ -123,12 +113,20 @@ public class Function2Binary {
             }
         };
 
-        population = m.mutate(population);
-//        population.calculateAverageFitness();
-//        System.out.println(population.toString());
+        /*
+        create starting population
+        */
+        population = populationFactory.createNew();
+        population.calculateAverageFitness();
+        System.out.println("\nFunction2: binary encoding");
+        System.out.println("starting population:"+population.toString());
 
+        /*
+        initialise placeholder chromosome for best candidate solution so far
+        */
         BaseChromosome best = chromosomeFactory.createNew();
         best.calculateFitness();
+        
         // loop evolution
         for (int i = 0; i < 100; i++) {
             population = s.select(population);
@@ -137,8 +135,8 @@ public class Function2Binary {
             population.calculateAverageFitness();
             best = population.findBest(comparator, best);
         }
-        System.out.println(population.toString());
-        System.out.println(best.toString());
-        System.out.println("average: " + population.averageFitness());
+        System.out.println("final population: "+population.toString());
+        System.out.println("best candidate solution: "+best.toString());
+        System.out.println("population average fitness: " + population.averageFitness());
     }
 }
