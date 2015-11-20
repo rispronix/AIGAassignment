@@ -18,20 +18,40 @@ import selection.TournamentSelection;
  */
 public class Function3 {
 
-    private final FitnessFunction ff;
-    private final FitnessComparator comparator;
-    private final BaseChromosomeFactory chromosomeFactory;
-    private final TournamentSelection s;
-    private final Recombination r;
-    private final BaseMutation m;
-    private final int generationCount = 1000;
-    private final int geneQty = 20;// two float typed variables
-    private final int populationSize = 1000;// arbitrary and modifiable 
-    private final double recombinationProbability = 0.5;
-    private final double mutationProbability = 0.05;
+    private Random seed;
+
+    private FitnessFunction ff;
+    private FitnessComparator comparator;
+    private BaseChromosomeFactory chromosomeFactory;
+    private TournamentSelection s;
+    private Recombination r;
+    private BaseMutation m;
+    private int generationCount = 10;
+    private int geneQty = 10;// two float typed variables
+    private int populationSize = 10;// arbitrary and modifiable 
+    private double recombinationProbability = 0.5;
+    private double mutationProbability = 0.05;
     private Population population;
+    private BaseChromosome best;
 
     public Function3(Random seed) {
+        this.seed = seed;
+        run();
+    }
+
+    public Function3(Random seed, double mutationProbability, double recombinationProbability) {
+        this.seed=seed;
+        this.mutationProbability = mutationProbability;
+        this.recombinationProbability = recombinationProbability;
+        System.out.println("Mutation: "+mutationProbability +"\tRecombination: "+recombinationProbability);
+//        generationCount = 1000;
+//        geneQty = 20;// two float typed variables
+//        populationSize = 1000;// arbitrary and modifiable 
+//        run();
+    }
+
+    public void run() {
+
         /*
          minimise ...
          */
@@ -117,13 +137,13 @@ public class Function3 {
          */
         population = populationFactory.createNew();
         population.calculateAverageFitness();
-        System.out.println("\nFunction3: floating point encoding");
-        System.out.println("starting population: " + population.toString());
+//        System.out.println("\nFunction3: floating point encoding");
+//        System.out.println("starting population: " + population.toString());
 
         /*
          initialise placeholder chromosome for best candidate solution so far
          */
-        BaseChromosome best = chromosomeFactory.createNew();
+        best = chromosomeFactory.createNew();
         best.calculateFitness();
 
         // loop evolution
@@ -138,8 +158,14 @@ public class Function3 {
         /*
          display results
          */
-        System.out.println("final population: " + population.toString());
-        System.out.println("best candidate solution: " + best.toString());
-        System.out.println("population average fitness: " + population.averageFitness());
+//        System.out.println("final population: " + population.toString());
+//        System.out.println("best candidate solution: " + best.toString());
+//        System.out.println("population average fitness: " + population.averageFitness());
+
+//        return best.fitness();
+    }
+
+    public float getBestFitness() {
+        return best.fitness();
     }
 }
