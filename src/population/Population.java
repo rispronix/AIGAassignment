@@ -1,8 +1,8 @@
 package population;
 
-import chromosomes.BaseChromosome;
-import chromosomes.BaseChromosomeFactory;
-import comparators.BaseFitnessComparator;
+import chromosomes.Chromosome;
+import chromosomes.ChromosomeFactory;
+import comparators.FitnessComparator;
 import java.util.Arrays;
 
 /**
@@ -11,28 +11,28 @@ import java.util.Arrays;
  */
 public class Population {
 
-    private final BaseChromosome[] population;
-    private final BaseFitnessComparator comparator;
+    private final Chromosome[] population;
+    private final FitnessComparator comparator;
     private float averageFitness = 0;
 
-    public Population(int size, BaseFitnessComparator comparator) {
-        population = new BaseChromosome[size];
+    public Population(int size, FitnessComparator comparator) {
+        population = new Chromosome[size];
         this.comparator = comparator;
     }
 
-    public Population(int size, BaseChromosomeFactory chromosomeFactory, BaseFitnessComparator comparator) {
-        population = new BaseChromosome[size];
+    public Population(int size, ChromosomeFactory chromosomeFactory, FitnessComparator comparator) {
+        population = new Chromosome[size];
         this.comparator = comparator;
         for (int i = 0; i < size; i++) {
             population[i] = chromosomeFactory.createNew();
         }
     }
 
-    public BaseChromosome getBest(BaseChromosome best) {
+    public Chromosome getBest(Chromosome best) {
         if (best == null) {
             best = population[0];
         }
-        for (BaseChromosome chromosome : population) {
+        for (Chromosome chromosome : population) {
             if (comparator.compare(chromosome, best) > 0) {
                 best = chromosome;
             }
@@ -40,17 +40,17 @@ public class Population {
         return best;
     }
 
-    public void set(int index, BaseChromosome c) {
+    public void set(int index, Chromosome c) {
         population[index] = c;
     }
 
-    public BaseChromosome get(int index) {
+    public Chromosome get(int index) {
         return population[index];
     }
 
     public float evaluate() {
         averageFitness = 0;
-        for (BaseChromosome chromosome : population) {
+        for (Chromosome chromosome : population) {
             averageFitness += chromosome.evaluate();
         }
         return averageFitness = averageFitness / population.length;

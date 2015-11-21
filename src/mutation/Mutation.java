@@ -1,6 +1,6 @@
 package mutation;
 
-import chromosomes.BaseChromosome;
+import chromosomes.Chromosome;
 import java.util.Random;
 import population.Population;
 
@@ -8,12 +8,12 @@ import population.Population;
  *
  * @author rich
  */
-public abstract class BaseMutation {
+public abstract class Mutation {
     
     protected Random seed;
     protected double probability;
     
-    public BaseMutation(Random seed,double probability){
+    public Mutation(Random seed,double probability){
         this.seed=seed;
         this.probability=probability;
     }
@@ -27,5 +27,5 @@ public abstract class BaseMutation {
         return population;
     }
     
-    public abstract BaseChromosome mutateGene(BaseChromosome c);
+    public abstract Chromosome mutateGene(Chromosome c);
 }

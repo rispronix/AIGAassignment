@@ -1,14 +1,14 @@
 
-package GA.tsp;
+package geneticAlgorithm.tsp;
 
-import GA.BaseFunction;
+import geneticAlgorithm.GA;
 import java.util.Random;
 
 /**
  *
  * @author rich
  */
-public class TSPFunction extends BaseFunction {
+public class TSPFunction extends GA {
 
     public TSPFunction(Random seed) {
         super(seed);

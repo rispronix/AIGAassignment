@@ -1,9 +1,9 @@
-package GA.function2;
+package geneticAlgorithm.function2;
 
 import java.util.Random;
 
-import chromosomes.BaseChromosome;
-import chromosomes.BaseChromosomeFactory;
+import chromosomes.Chromosome;
+import chromosomes.ChromosomeFactory;
 import mutation.FloatGaussianMutation;
 import recombination.SinglePointCrossover;
 
@@ -42,7 +42,7 @@ public class Function2Float extends BaseFunction2 {
 
     @Override
     public void setupFitnessFunction() {
-        ff = (BaseChromosome c) -> {
+        ff = (Chromosome c) -> {
             float x = (float) c.getGene(0);
             float y = (float) c.getGene(1);
             return (float) (0.26 * (x * x * y * y)
@@ -52,14 +52,14 @@ public class Function2Float extends BaseFunction2 {
 
     @Override
     public void setupChromosomeFactory() {
-        chromosomeFactory = new BaseChromosomeFactory() {
+        chromosomeFactory = new ChromosomeFactory() {
 
             @Override
-            public BaseChromosome createNew() {
-                return new BaseChromosome(chromosomeSize) {
+            public Chromosome createNew() {
+                return new Chromosome(chromosomeSize) {
 
                     @Override
-                    public BaseChromosome initialise() {
+                    public Chromosome initialise() {
                         genes = new Float[chromosomeSize];
                         for (int i = 0; i < chromosomeSize; i++) {
                             genes[i] = seed.nextFloat() * 31 - 15;

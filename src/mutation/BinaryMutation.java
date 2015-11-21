@@ -1,20 +1,20 @@
 package mutation;
 
-import chromosomes.BaseChromosome;
+import chromosomes.Chromosome;
 import java.util.Random;
 
 /**
  *
  * @author rich
  */
-public class BinaryMutation extends BaseMutation {
+public class BinaryMutation extends Mutation {
 
     public BinaryMutation(Random seed, double probability) {
         super(seed, probability);
     }
 
     @Override
-    public BaseChromosome mutateGene(BaseChromosome c) {
+    public Chromosome mutateGene(Chromosome c) {
         int index = seed.nextInt(c.size());
         c.setGene(index, 1 - (int) c.getGene(index));
         return c;

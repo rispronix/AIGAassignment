@@ -1,9 +1,9 @@
-package GA.function1;
+package geneticAlgorithm.function1;
 
-import GA.BaseFunction;
+import geneticAlgorithm.GA;
 import chromosomes.BinaryChromosome;
-import chromosomes.BaseChromosome;
-import chromosomes.BaseChromosomeFactory;
+import chromosomes.Chromosome;
+import chromosomes.ChromosomeFactory;
 import comparators.CompareMax;
 import conversions.DecimalFromBinary;
 import fitness.FitnessFunction;
@@ -18,7 +18,7 @@ import selection.TournamentSelection;
  *
  * @author rich
  */
-public class Function1 extends BaseFunction {
+public class Function1 extends GA {
 
     private final int chromosomeSize = 8;//hardcoded as max value 255 is 8 bits
 
@@ -51,7 +51,7 @@ public class Function1 extends BaseFunction {
             DecimalFromBinary dfb = new DecimalFromBinary();
 
             @Override
-            public float calculate(BaseChromosome c) {
+            public float calculate(Chromosome c) {
 
                 return (float) Math.pow(dfb.decimalFromBinary(
                         c.getGenes(0, c.size())), 2);
@@ -66,10 +66,10 @@ public class Function1 extends BaseFunction {
 
     @Override
     public void setupChromosomeFactory() {
-        chromosomeFactory = new BaseChromosomeFactory() {
+        chromosomeFactory = new ChromosomeFactory() {
 
             @Override
-            public BaseChromosome createNew() {
+            public Chromosome createNew() {
                 return new BinaryChromosome(seed, chromosomeSize) {
 
                     @Override

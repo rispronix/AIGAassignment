@@ -6,7 +6,7 @@ import java.util.Random;
  *
  * @author rich
  */
-public abstract class BinaryChromosome extends BaseChromosome {
+public abstract class BinaryChromosome extends Chromosome {
 
     protected Random seed;
     
@@ -20,7 +20,7 @@ public abstract class BinaryChromosome extends BaseChromosome {
 //    }
 
     @Override
-    public BaseChromosome initialise() {
+    public Chromosome initialise() {
         genes = new Integer[size];
         for (int i = 0; i < size; i++) {
             genes[i] = seed.nextInt(2);

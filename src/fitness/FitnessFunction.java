@@ -1,6 +1,6 @@
 package fitness;
 
-import chromosomes.BaseChromosome;
+import chromosomes.Chromosome;
 
 /**
  *
@@ -8,5 +8,5 @@ import chromosomes.BaseChromosome;
  */
 public interface FitnessFunction {
     
-    float calculate(BaseChromosome c);
+    float calculate(Chromosome c);
 }

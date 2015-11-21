@@ -1,6 +1,6 @@
-package GA.function2;
+package geneticAlgorithm.function2;
 
-import GA.BaseFunction;
+import geneticAlgorithm.GA;
 import comparators.CompareMin;
 import java.util.Random;
 import population.Population;
@@ -11,7 +11,7 @@ import selection.TournamentSelection;
  *
  * @author rich
  */
-public abstract class BaseFunction2 extends BaseFunction {
+public abstract class BaseFunction2 extends GA {
 
     public BaseFunction2(Random seed) {
         super(seed);

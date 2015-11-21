@@ -7,17 +7,17 @@ import java.util.Arrays;
  * @author rich
  * @param <T>
  */
-public abstract class BaseChromosome <T> {
+public abstract class Chromosome <T> {
 
     protected T[] genes;
     protected int size;
     protected float fitness;
 
-    public abstract BaseChromosome initialise();
+    public abstract Chromosome initialise();
 
     public abstract float evaluate();
 
-    public BaseChromosome(int size) {
+    public Chromosome(int size) {
         this.size = size;
     }
 
@@ -29,7 +29,7 @@ public abstract class BaseChromosome <T> {
 //        }
 //    }
 
-    public void setGenes(BaseChromosome c) {
+    public void setGenes(Chromosome c) {
         T[] copy = (T[]) c.genes.clone();
         for (int i = 0; i < c.size(); i++) {
             genes[i] = (T) copy[i];

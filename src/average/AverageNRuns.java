@@ -1,6 +1,6 @@
 package average;
 
-import GA.BaseFunction;
+import geneticAlgorithm.GA;
 import java.util.ArrayList;
 import stats.RunStatistics;
 
@@ -9,7 +9,7 @@ import stats.RunStatistics;
  * @author rich
  */
 public class AverageNRuns {
-    public AverageNRuns(int numberOfRunsToAverage, BaseFunction function) {
+    public AverageNRuns(int numberOfRunsToAverage, GA function) {
         ArrayList<ArrayList<RunStatistics>> runs = new ArrayList();
 //        double sum = 0;
         for (int i = 0; i < numberOfRunsToAverage; i++) {

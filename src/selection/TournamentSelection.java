@@ -1,8 +1,8 @@
 package selection;
 
 
-import chromosomes.BaseChromosome;
-import comparators.BaseFitnessComparator;
+import chromosomes.Chromosome;
+import comparators.FitnessComparator;
 import java.util.Random;
 import population.Population;
 import population.PopulationFactory;
@@ -11,10 +11,10 @@ import population.PopulationFactory;
  *
  * @author rich
  */
-public class TournamentSelection extends BaseSelection {
+public class TournamentSelection extends Selection {
 
     public TournamentSelection(Random seed,
-            BaseFitnessComparator comparator,
+            FitnessComparator comparator,
             PopulationFactory populationFactory) {
         super(seed, comparator, populationFactory);
     }
@@ -31,7 +31,7 @@ public class TournamentSelection extends BaseSelection {
     }
 
     @Override
-    public BaseChromosome select(BaseChromosome c1, BaseChromosome c2) {
+    public Chromosome select(Chromosome c1, Chromosome c2) {
         return comparator.compare(c1, c2) < 0 ? c2 : c1;
     }
 }

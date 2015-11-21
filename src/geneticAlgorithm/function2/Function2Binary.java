@@ -1,8 +1,8 @@
-package GA.function2;
+package geneticAlgorithm.function2;
 
 import chromosomes.BinaryChromosome;
-import chromosomes.BaseChromosome;
-import chromosomes.BaseChromosomeFactory;
+import chromosomes.Chromosome;
+import chromosomes.ChromosomeFactory;
 import conversions.DecimalFromBinary;
 import java.util.Random;
 import mutation.BinaryMutation;
@@ -44,7 +44,7 @@ public class Function2Binary extends BaseFunction2 {
     @Override
     public void setupFitnessFunction() {
         DecimalFromBinary dfb = new DecimalFromBinary();
-        ff = (BaseChromosome c) -> {
+        ff = (Chromosome c) -> {
             float x = dfb.decimalFromBinary(
                     c.getGenes(0, 5)) - 15;
             float y = dfb.decimalFromBinary(
@@ -56,10 +56,10 @@ public class Function2Binary extends BaseFunction2 {
 
     @Override
     public void setupChromosomeFactory() {
-        chromosomeFactory = new BaseChromosomeFactory() {
+        chromosomeFactory = new ChromosomeFactory() {
 
             @Override
-            public BaseChromosome createNew() {
+            public Chromosome createNew() {
                 return new BinaryChromosome(seed, chromosomeSize) {
 
                     @Override

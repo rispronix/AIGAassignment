@@ -1,34 +1,34 @@
-package GA;
+package geneticAlgorithm;
 
 import java.util.Random;
 import java.util.ArrayList;
 
-import comparators.BaseFitnessComparator;
+import comparators.FitnessComparator;
 import fitness.FitnessFunction;
-import chromosomes.BaseChromosome;
-import chromosomes.BaseChromosomeFactory;
-import mutation.BaseMutation;
+import chromosomes.Chromosome;
+import chromosomes.ChromosomeFactory;
+import mutation.Mutation;
 import population.Population;
 import population.PopulationFactory;
-import recombination.SinglePointCrossover;
-import selection.TournamentSelection;
+import recombination.Recombination;
+import selection.Selection;
 import stats.RunStatistics;
 
 /**
  *
  * @author rich
  */
-public abstract class BaseFunction {
+public abstract class GA {
 
     protected Random seed;
 
     protected FitnessFunction ff;
-    protected BaseFitnessComparator comparator;
-    protected BaseChromosomeFactory chromosomeFactory;
+    protected FitnessComparator comparator;
+    protected ChromosomeFactory chromosomeFactory;
     protected PopulationFactory populationFactory;
-    protected TournamentSelection selection;
-    protected SinglePointCrossover recombination;
-    protected BaseMutation mutation;
+    protected Selection selection;
+    protected Recombination recombination;
+    protected Mutation mutation;
 
     protected int generationCount = 50;//default parameter
     protected int populationSize = 50;//default parameter
@@ -37,14 +37,14 @@ public abstract class BaseFunction {
     protected double mutationProbability = 0.05;//default parameter
 
     protected Population population;
-    protected BaseChromosome best;
+    protected Chromosome best;
     protected ArrayList<RunStatistics> stats;
 
-    public BaseFunction(Random seed) {
+    public GA(Random seed) {
         this.seed = seed;
     }
 
-    public BaseFunction(Random seed,
+    public GA(Random seed,
             double recombinationProbability,
             double mutationProbability) {
         this.seed = seed;
@@ -52,7 +52,7 @@ public abstract class BaseFunction {
         this.recombinationProbability = recombinationProbability;
     }
 
-    public BaseFunction(Random seed,
+    public GA(Random seed,
             int generationCount,
             int populationSize,
             double recombinationProbability,
@@ -127,7 +127,7 @@ public abstract class BaseFunction {
         return populationSize;
     }
 
-    public BaseChromosome getBest() {
+    public Chromosome getBest() {
         return best;
     }
     

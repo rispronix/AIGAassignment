@@ -1,8 +1,8 @@
-package GA.function3;
+package geneticAlgorithm.function3;
 
-import GA.BaseFunction;
-import chromosomes.BaseChromosome;
-import chromosomes.BaseChromosomeFactory;
+import geneticAlgorithm.GA;
+import chromosomes.Chromosome;
+import chromosomes.ChromosomeFactory;
 import comparators.CompareMin;
 import java.util.Random;
 import mutation.FloatGaussianMutation;
@@ -15,7 +15,7 @@ import selection.TournamentSelection;
  *
  * @author rich
  */
-public class Function3 extends BaseFunction {
+public class Function3 extends GA {
 
     private final int chromosomeSize;
 
@@ -48,7 +48,7 @@ public class Function3 extends BaseFunction {
 
     @Override
     public void setupFitnessFunction() {
-        ff = (BaseChromosome c) -> {
+        ff = (Chromosome c) -> {
             float result = 10 * c.size();
             for (int i = 0; i < c.size(); i++) {
                 float value = (float) c.getGene(i);
@@ -66,14 +66,14 @@ public class Function3 extends BaseFunction {
 
     @Override
     public void setupChromosomeFactory() {
-        chromosomeFactory = new BaseChromosomeFactory() {
+        chromosomeFactory = new ChromosomeFactory() {
 
             @Override
-            public BaseChromosome createNew() {
-                return new BaseChromosome(chromosomeSize) {
+            public Chromosome createNew() {
+                return new Chromosome(chromosomeSize) {
 
                     @Override
-                    public BaseChromosome initialise() {
+                    public Chromosome initialise() {
                         genes = new Float[chromosomeSize];
                         for (int i = 0; i < chromosomeSize; i++) {
                             genes[i] = (seed.nextFloat()

@@ -1,9 +1,9 @@
 package main;
 
-import GA.function1.Function1;
-import GA.function2.Function2Binary;
-import GA.function2.Function2Float;
-import GA.function3.Function3;
+import geneticAlgorithm.function1.Function1;
+import geneticAlgorithm.function2.Function2Binary;
+import geneticAlgorithm.function2.Function2Float;
+import geneticAlgorithm.function3.Function3;
 import average.AverageNRuns;
 
 import java.util.Random;

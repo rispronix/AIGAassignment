@@ -1,7 +1,7 @@
 package selection;
 
-import chromosomes.BaseChromosome;
-import comparators.BaseFitnessComparator;
+import chromosomes.Chromosome;
+import comparators.FitnessComparator;
 import java.util.Random;
 import population.Population;
 import population.PopulationFactory;
@@ -10,14 +10,14 @@ import population.PopulationFactory;
  *
  * @author rich
  */
-public abstract class BaseSelection {
+public abstract class Selection {
 
     protected final Random seed;
-    protected final BaseFitnessComparator comparator;
+    protected final FitnessComparator comparator;
     protected final PopulationFactory populationFactory;
 
-    public BaseSelection(Random seed,
-            BaseFitnessComparator comparator,
+    public Selection(Random seed,
+            FitnessComparator comparator,
             PopulationFactory populationFactory) {
         this.seed = seed;
         this.comparator = comparator;
@@ -25,5 +25,5 @@ public abstract class BaseSelection {
     }
     
     public abstract Population select(Population population);
-    public abstract BaseChromosome select(BaseChromosome c1, BaseChromosome c2);
+    public abstract Chromosome select(Chromosome c1, Chromosome c2);
 }
