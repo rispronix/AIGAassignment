@@ -73,7 +73,7 @@ public class Function3WithGAParameterTuning {
                     }
 
                     @Override
-                    public float calculateFitness() {
+                    public float evaluate() {
                         return fitness = ff.calculate(this);
                     }
                 }.initialise();
@@ -121,7 +121,7 @@ public class Function3WithGAParameterTuning {
          create starting population
          */
         population = populationFactory.createNew();
-        population.calculateAverageFitness();
+        population.evaluate();
         System.out.println("\nFunction1 with GA parameter tuning: floating point encoding");
         System.out.println("starting population: " + population.toString());
 
@@ -129,7 +129,7 @@ public class Function3WithGAParameterTuning {
          initialise placeholder chromosome for best candidate solution so far
          */
         best = chromosomeFactory.createNew();
-        best.calculateFitness();
+        best.evaluate();
 
         // loop evolution
         for (int i = 0; i < generationCount; i++) {
@@ -137,8 +137,8 @@ public class Function3WithGAParameterTuning {
             population = s.select(population);
             population = r.singlepointCrossover(population);
             population = m.mutate(population);
-            population.calculateAverageFitness();
-            best = population.findBest(comparator, best);
+            population.evaluate();
+            best = population.getBest(comparator, best);
         }
 
         /*

@@ -18,36 +18,33 @@ import selection.TournamentSelection;
  */
 public class Function3 {
 
-    private Random seed;
+    private final Random seed;
 
     private FitnessFunction ff;
     private FitnessComparator comparator;
     private BaseChromosomeFactory chromosomeFactory;
-    private TournamentSelection s;
-    private Recombination r;
-    private BaseMutation m;
-    private int generationCount = 10;
-    private int geneQty = 10;// two float typed variables
-    private int populationSize = 10;// arbitrary and modifiable 
-    private double recombinationProbability = 0.5;
-    private double mutationProbability = 0.05;
+    private TournamentSelection selection;
+    private Recombination recombination;
+    private BaseMutation mutation;
+    
+    private int geneQty = 10;
+    private int generationCount = 50;
+    private int populationSize=50; 
+    
+    private double recombinationProbability=0.5;
+    private double mutationProbability=0.05;
+    
     private Population population;
     private BaseChromosome best;
 
     public Function3(Random seed) {
         this.seed = seed;
-        run();
     }
 
     public Function3(Random seed, double mutationProbability, double recombinationProbability) {
-        this.seed=seed;
+        this.seed = seed;
         this.mutationProbability = mutationProbability;
         this.recombinationProbability = recombinationProbability;
-        System.out.println("Mutation: "+mutationProbability +"\tRecombination: "+recombinationProbability);
-//        generationCount = 1000;
-//        geneQty = 20;// two float typed variables
-//        populationSize = 1000;// arbitrary and modifiable 
-//        run();
     }
 
     public void run() {
@@ -89,7 +86,7 @@ public class Function3 {
                     }
 
                     @Override
-                    public float calculateFitness() {
+                    public float evaluate() {
                         return fitness = ff.calculate(this);
                     }
                 }.initialise();
@@ -120,9 +117,9 @@ public class Function3 {
         /*
          define selection, recombination, and mutation operators
          */
-        s = new TournamentSelection(seed, comparator, populationFactory);
-        r = new Recombination(seed, populationFactory, recombinationProbability);
-        m = new BaseMutation(seed, mutationProbability) {
+        selection = new TournamentSelection(seed, comparator, populationFactory);
+        recombination = new Recombination(seed, populationFactory, recombinationProbability);
+        mutation = new BaseMutation(seed, mutationProbability) {
 
             @Override
             public BaseChromosome mutateGene(BaseChromosome c) {
@@ -136,7 +133,7 @@ public class Function3 {
          create starting population
          */
         population = populationFactory.createNew();
-        population.calculateAverageFitness();
+        population.evaluate();
 //        System.out.println("\nFunction3: floating point encoding");
 //        System.out.println("starting population: " + population.toString());
 
@@ -144,15 +141,15 @@ public class Function3 {
          initialise placeholder chromosome for best candidate solution so far
          */
         best = chromosomeFactory.createNew();
-        best.calculateFitness();
+        best.evaluate();
 
         // loop evolution
         for (int i = 0; i < generationCount; i++) {
-            population = s.select(population);
-            population = r.singlepointCrossover(population);
-            population = m.mutate(population);
-            population.calculateAverageFitness();
-            best = population.findBest(comparator, best);
+            population = selection.select(population);
+            population = recombination.singlepointCrossover(population);
+            population = mutation.mutate(population);
+            population.evaluate();
+            best = population.getBest(comparator, best);
         }
 
         /*
@@ -161,7 +158,6 @@ public class Function3 {
 //        System.out.println("final population: " + population.toString());
 //        System.out.println("best candidate solution: " + best.toString());
 //        System.out.println("population average fitness: " + population.averageFitness());
-
 //        return best.fitness();
     }
 

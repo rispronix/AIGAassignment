@@ -14,7 +14,7 @@ public abstract class BaseChromosome<T> {
 
     public abstract BaseChromosome initialise();
 
-    public abstract float calculateFitness();
+    public abstract float evaluate();
 
     public void setGenes(BaseChromosome c) {
         for (int i = 0; i < c.size(); i++) {

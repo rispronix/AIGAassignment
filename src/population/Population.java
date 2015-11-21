@@ -25,7 +25,7 @@ public class Population {
         }
     }
 
-    public BaseChromosome findBest(FitnessComparator comparator, BaseChromosome best) {
+    public BaseChromosome getBest(FitnessComparator comparator, BaseChromosome best) {
         for (int i = 0; i < population.length; i++) {
             if (comparator.compare(population[i], best) > 0) {
                 best = population[i];
@@ -42,10 +42,10 @@ public class Population {
         return population[index];
     }
 
-    public float calculateAverageFitness() {
+    public float evaluate() {
         averageFitness = 0;
         for (BaseChromosome chromosome : population) {
-            averageFitness += chromosome.calculateFitness();
+            averageFitness += chromosome.evaluate();
         }
         return averageFitness = averageFitness / population.length;
     }

@@ -44,4 +44,8 @@ public class Recombination {
         }
         return c1;
     }
+    
+    public Population recombine(Population population){
+        return population;
+    }
 }

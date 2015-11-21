@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package function2;
 
 import chromosomes.BaseChromosome;
@@ -71,7 +66,7 @@ public class Function2Float {
                     }
 
                     @Override
-                    public float calculateFitness() {
+                    public float evaluate() {
                         return fitness = ff.calculate(this);
                     }
                 }.initialise();
@@ -119,7 +114,7 @@ public class Function2Float {
          create starting population
          */
         population = populationFactory.createNew();
-        population.calculateAverageFitness();
+        population.evaluate();
         System.out.println("\nFunction2: floating point encoding");
         System.out.println("starting population: " + population.toString());
 
@@ -127,15 +122,15 @@ public class Function2Float {
          initialise placeholder chromosome for best candidate solution so far
          */
         BaseChromosome best = chromosomeFactory.createNew();
-        best.calculateFitness();
+        best.evaluate();
 
         // loop evolution
         for (int i = 0; i < generationCount; i++) {
             population = s.select(population);
             population = r.singlepointCrossover(population);
             population = m.mutate(population);
-            population.calculateAverageFitness();
-            best = population.findBest(comparator, best);
+            population.evaluate();
+            best = population.getBest(comparator, best);
         }
 
         /*

@@ -67,7 +67,7 @@ public class Function2Binary {
                     }
 
                     @Override
-                    public float calculateFitness() {
+                    public float evaluate() {
                         return fitness = ff.calculate(this);
                     }
                 }.initialise();
@@ -115,7 +115,7 @@ public class Function2Binary {
          create starting population
          */
         population = populationFactory.createNew();
-        population.calculateAverageFitness();
+        population.evaluate();
         System.out.println("\nFunction2: binary encoding");
         System.out.println("starting population:" + population.toString());
 
@@ -123,15 +123,15 @@ public class Function2Binary {
          initialise placeholder chromosome for best candidate solution so far
          */
         BaseChromosome best = chromosomeFactory.createNew();
-        best.calculateFitness();
+        best.evaluate();
 
         // loop evolution
         for (int i = 0; i < 100; i++) {
             population = s.select(population);
             population = r.singlepointCrossover(population);
             population = m.mutate(population);
-            population.calculateAverageFitness();
-            best = population.findBest(comparator, best);
+            population.evaluate();
+            best = population.getBest(comparator, best);
         }
         System.out.println("final population: " + population.toString());
         System.out.println("best candidate solution: " + best.toString());
