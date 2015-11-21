@@ -17,8 +17,9 @@ public abstract class BaseChromosome<T> {
     public abstract float evaluate();
 
     public void setGenes(BaseChromosome c) {
+        T[] copy = (T[]) c.genes.clone();
         for (int i = 0; i < c.size(); i++) {
-            genes[i] = (T) c.getGene(i);
+            genes[i] = (T) copy[i];
         }
     }
 
