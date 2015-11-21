@@ -1,23 +1,23 @@
 package recombination;
 
-import chromosomes.NewBaseChromosome;
+import chromosomes.BaseChromosome;
 import java.util.Random;
-import population.NewPopulation;
-import population.NewPopulationFactory;
+import population.Population;
+import population.PopulationFactory;
 
 /**
  *
  * @author rich
  */
-public class NewSinglePointCrossover extends NewBaseRecombination {
+public class SinglePointCrossover extends BaseRecombination {
 
-    public NewSinglePointCrossover(Random seed, NewPopulationFactory populationFactory, double probability) {
+    public SinglePointCrossover(Random seed, PopulationFactory populationFactory, double probability) {
         super(seed, populationFactory, probability);
     }
 
     @Override
-    public NewPopulation recombine(NewPopulation population) {
-        NewPopulation newp = populationFactory.createNew();
+    public Population recombine(Population population) {
+        Population newp = populationFactory.createNew();
         for (int i = 0; i < population.size(); i++) {
             if (seed.nextDouble() < probability) {
                 newp.set(i, singlepointCrossover(
@@ -28,8 +28,8 @@ public class NewSinglePointCrossover extends NewBaseRecombination {
         return newp;
     }
     
-    public NewBaseChromosome singlepointCrossover(NewBaseChromosome c1,
-            NewBaseChromosome c2) {
+    public BaseChromosome singlepointCrossover(BaseChromosome c1,
+            BaseChromosome c2) {
         int pivot = seed.nextInt(c1.size());
         for (int i = pivot; i < c1.size(); i++) {
             c1.setGene(i, c2.getGene(i));

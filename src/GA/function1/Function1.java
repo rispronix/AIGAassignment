@@ -2,17 +2,17 @@ package GA.function1;
 
 import GA.BaseFunction;
 import chromosomes.BinaryChromosome;
-import chromosomes.NewBaseChromosome;
-import chromosomes.NewBaseChromosomeFactory;
+import chromosomes.BaseChromosome;
+import chromosomes.BaseChromosomeFactory;
 import comparators.CompareMax;
 import conversions.DecimalFromBinary;
-import fitness.NewFitnessFunction;
+import fitness.FitnessFunction;
 import java.util.Random;
-import mutation.NewBinaryMutation;
-import population.NewPopulation;
-import population.NewPopulationFactory;
-import recombination.NewSinglePointCrossover;
-import selection.NewTournamentSelection;
+import mutation.BinaryMutation;
+import population.Population;
+import population.PopulationFactory;
+import recombination.SinglePointCrossover;
+import selection.TournamentSelection;
 
 /**
  *
@@ -46,12 +46,12 @@ public class Function1 extends BaseFunction {
 
     @Override
     public void setupFitnessFunction() {
-        ff = new NewFitnessFunction() {
+        ff = new FitnessFunction() {
 
             DecimalFromBinary dfb = new DecimalFromBinary();
 
             @Override
-            public float calculate(NewBaseChromosome c) {
+            public float calculate(BaseChromosome c) {
 
                 return (float) Math.pow(dfb.decimalFromBinary(
                         c.getGenes(0, c.size())), 2);
@@ -66,10 +66,10 @@ public class Function1 extends BaseFunction {
 
     @Override
     public void setupChromosomeFactory() {
-        chromosomeFactory = new NewBaseChromosomeFactory() {
+        chromosomeFactory = new BaseChromosomeFactory() {
 
             @Override
-            public NewBaseChromosome createNew() {
+            public BaseChromosome createNew() {
                 return new BinaryChromosome(seed, chromosomeSize) {
 
                     @Override
@@ -83,16 +83,16 @@ public class Function1 extends BaseFunction {
 
     @Override
     public void setupPopulationFactory() {
-        populationFactory = new NewPopulationFactory() {
+        populationFactory = new PopulationFactory() {
 
             @Override
-            public NewPopulation createNew() {
-                return new NewPopulation(populationSize, chromosomeFactory);
+            public Population createNew() {
+                return new Population(populationSize, chromosomeFactory);
             }
 
             @Override
-            public NewPopulation createCopy(NewPopulation population) {
-                NewPopulation newPopulation = new NewPopulation(populationSize);
+            public Population createCopy(Population population) {
+                Population newPopulation = new Population(populationSize);
                 for (int i = 0; i < populationSize; i++) {
                     newPopulation.set(i,
                             chromosomeFactory.createCopy(population.get(i)));
@@ -105,18 +105,18 @@ public class Function1 extends BaseFunction {
 
     @Override
     public void setupSelection() {
-        selection = new NewTournamentSelection(seed, comparator,
+        selection = new TournamentSelection(seed, comparator,
                 populationFactory);
     }
 
     @Override
     public void setupRecombination() {
-        recombination = new NewSinglePointCrossover(seed, populationFactory,
+        recombination = new SinglePointCrossover(seed, populationFactory,
                 recombinationProbability);
     }
 
     @Override
     public void setupMutation() {
-        mutation = new NewBinaryMutation(seed, mutationProbability);
+        mutation = new BinaryMutation(seed, mutationProbability);
     }
 }

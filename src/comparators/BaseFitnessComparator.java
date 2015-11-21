@@ -1,6 +1,6 @@
 package comparators;
 
-import chromosomes.NewBaseChromosome;
+import chromosomes.BaseChromosome;
 
 /**
  *
@@ -8,5 +8,5 @@ import chromosomes.NewBaseChromosome;
  */
 public interface BaseFitnessComparator {
     
-    public int compare(NewBaseChromosome c1, NewBaseChromosome c2);
+    public int compare(BaseChromosome c1, BaseChromosome c2);
 }

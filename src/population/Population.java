@@ -26,9 +26,9 @@ public class Population {
     }
 
     public BaseChromosome getBest(BaseFitnessComparator comparator, BaseChromosome best) {
-        for (int i = 0; i < population.length; i++) {
-            if (comparator.compare(population[i], best) > 0) {
-                best = population[i];
+        for (BaseChromosome chromosome : population) {
+            if (comparator.compare(chromosome, best) > 0) {
+                best = chromosome;
             }
         }
         return best;

@@ -1,15 +1,15 @@
 package GA;
 
-import chromosomes.NewBaseChromosome;
-import chromosomes.NewBaseChromosomeFactory;
+import chromosomes.BaseChromosome;
+import chromosomes.BaseChromosomeFactory;
 import comparators.BaseFitnessComparator;
-import fitness.NewFitnessFunction;
+import fitness.FitnessFunction;
 import java.util.Random;
-import mutation.NewBaseMutation;
-import population.NewPopulation;
-import population.NewPopulationFactory;
-import recombination.NewSinglePointCrossover;
-import selection.NewTournamentSelection;
+import mutation.BaseMutation;
+import population.Population;
+import population.PopulationFactory;
+import recombination.SinglePointCrossover;
+import selection.TournamentSelection;
 
 /**
  *
@@ -17,13 +17,13 @@ import selection.NewTournamentSelection;
  */
 public abstract class BaseFunction {
 
-    protected NewFitnessFunction ff;
+    protected FitnessFunction ff;
     protected BaseFitnessComparator comparator;
-    protected NewBaseChromosomeFactory chromosomeFactory;
-    protected NewPopulationFactory populationFactory;
-    protected NewTournamentSelection selection;
-    protected NewSinglePointCrossover recombination;
-    protected NewBaseMutation mutation;
+    protected BaseChromosomeFactory chromosomeFactory;
+    protected PopulationFactory populationFactory;
+    protected TournamentSelection selection;
+    protected SinglePointCrossover recombination;
+    protected BaseMutation mutation;
 
     protected Random seed;
 
@@ -33,8 +33,8 @@ public abstract class BaseFunction {
     protected double recombinationProbability = 0.5;//default parameter
     protected double mutationProbability = 0.05;//default parameter
 
-    protected NewPopulation population;
-    protected NewBaseChromosome best;
+    protected Population population;
+    protected BaseChromosome best;
 
     public BaseFunction(Random seed) {
         this.seed = seed;
@@ -114,7 +114,7 @@ public abstract class BaseFunction {
 
     }
 
-    public NewBaseChromosome getBest() {
+    public BaseChromosome getBest() {
         return best;
     }
 }

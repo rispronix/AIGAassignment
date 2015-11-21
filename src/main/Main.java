@@ -1,8 +1,9 @@
 package main;
 
 import GA.function1.Function1;
-import GA.function2.NewFunction2Binary;
-import GA.function2.NewFunction2Float;
+import GA.function2.Function2Binary;
+import GA.function2.Function2Float;
+import GA.function3.Function3;
 
 import java.util.Random;
 
@@ -18,7 +19,8 @@ public class Main {
         Random seed = new Random(System.currentTimeMillis());
 
         new Function1(seed).run();
-        new NewFunction2Binary(seed).run();
-        new NewFunction2Float(seed).run();
+        new Function2Binary(seed).run();
+        new Function2Float(seed).run();
+        new Function3(seed,500,500,0.5,0.05,10).run();
     }
 }

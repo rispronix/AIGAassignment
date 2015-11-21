@@ -1,20 +1,20 @@
 package mutation;
 
-import chromosomes.NewBaseChromosome;
+import chromosomes.BaseChromosome;
 import java.util.Random;
 
 /**
  *
  * @author rich
  */
-public class NewFloatGaussianMutation extends NewBaseMutation {
+public class FloatGaussianMutation extends BaseMutation {
 
-    public NewFloatGaussianMutation(Random seed, double probability) {
+    public FloatGaussianMutation(Random seed, double probability) {
         super(seed, probability);
     }
 
     @Override
-    public NewBaseChromosome mutateGene(NewBaseChromosome c) {
+    public BaseChromosome mutateGene(BaseChromosome c) {
         int index = seed.nextInt(c.size());
         c.setGene(index, (float) c.getGene(index) + (float) seed.nextGaussian());
         return c;

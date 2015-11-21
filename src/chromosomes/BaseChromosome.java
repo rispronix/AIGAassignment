@@ -7,18 +7,32 @@ import java.util.Arrays;
  * @author rich
  * @param <T>
  */
-public abstract class BaseChromosome<T> {
+public abstract class BaseChromosome <T> {
 
     protected T[] genes;
+    protected int size;
     protected float fitness;
 
     public abstract BaseChromosome initialise();
 
     public abstract float evaluate();
 
+    public BaseChromosome(int size) {
+        this.size = size;
+    }
+
+//    public NewBaseChromosome(NewBaseChromosome source) {
+//        size = source.size();
+//        T[] copy = (T[]) source.genes.clone();
+//        for (int i = 0; i < size; i++) {
+//            genes[i] = (T) copy[i];
+//        }
+//    }
+
     public void setGenes(BaseChromosome c) {
+        T[] copy = (T[]) c.genes.clone();
         for (int i = 0; i < c.size(); i++) {
-            genes[i] = (T) c.getGene(i);
+            genes[i] = (T) copy[i];
         }
     }
 
@@ -43,12 +57,11 @@ public abstract class BaseChromosome<T> {
     }
 
     public int size() {
-        return genes.length;
+        return size;
     }
 
     @Override
     public String toString() {
-        return "BaseChromosome{" + "fitness=" + fitness + ", genes=" + Arrays.toString(genes) + '}';
+        return "NewBaseChromosome{" + "fitness=" + fitness + ", genes=" + Arrays.toString(genes) + '}';
     }
-
 }

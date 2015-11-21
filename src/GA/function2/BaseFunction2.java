@@ -3,9 +3,9 @@ package GA.function2;
 import GA.BaseFunction;
 import comparators.CompareMin;
 import java.util.Random;
-import population.NewPopulation;
-import population.NewPopulationFactory;
-import selection.NewTournamentSelection;
+import population.Population;
+import population.PopulationFactory;
+import selection.TournamentSelection;
 
 /**
  *
@@ -42,16 +42,16 @@ public abstract class BaseFunction2 extends BaseFunction {
 
     @Override
     public void setupPopulationFactory() {
-        populationFactory = new NewPopulationFactory() {
+        populationFactory = new PopulationFactory() {
 
             @Override
-            public NewPopulation createNew() {
-                return new NewPopulation(populationSize, chromosomeFactory);
+            public Population createNew() {
+                return new Population(populationSize, chromosomeFactory);
             }
 
             @Override
-            public NewPopulation createCopy(NewPopulation population) {
-                NewPopulation copy = new NewPopulation(populationSize);
+            public Population createCopy(Population population) {
+                Population copy = new Population(populationSize);
                 for (int i = 0; i < populationSize; i++) {
                     copy.set(i, chromosomeFactory.createCopy(population.get(i)));
 
@@ -62,6 +62,6 @@ public abstract class BaseFunction2 extends BaseFunction {
 
     @Override
     public void setupSelection() {
-        selection = new NewTournamentSelection(seed, comparator, populationFactory);
+        selection = new TournamentSelection(seed, comparator, populationFactory);
     }
 }
