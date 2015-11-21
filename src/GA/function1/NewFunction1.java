@@ -18,22 +18,28 @@ import selection.NewTournamentSelection;
  */
 public class NewFunction1 extends BaseFunction {
 
+    int chromosomeSize = 8;//hardcoded as max value 255 is always 8 bits
+
     public NewFunction1(Random seed) {
         super(seed);
-        this.populationSize = 50;
-        this.generationCount = 50;
-        this.chromosomeSize = 8;
-        this.mutationProbability = 0.05;
-        this.recombinationProbability = 0.5;
     }
 
     public NewFunction1(Random seed,
             double mutationProbability,
             double recombinationProbability) {
-        super(seed, mutationProbability, recombinationProbability);
-        this.populationSize = 50;
-        this.generationCount = 50;
-        this.chromosomeSize = 8;
+        super(seed, mutationProbability, 
+                recombinationProbability);
+    }
+
+    public NewFunction1(Random seed,
+            int generationCount,
+            int populationSize,
+            double mutationProbability,
+            double recombinationProbability) {
+        super(seed, generationCount,
+                populationSize, 
+                mutationProbability, 
+                recombinationProbability);
     }
 
     @Override
@@ -76,7 +82,8 @@ public class NewFunction1 extends BaseFunction {
             public NewPopulation createCopy(NewPopulation population) {
                 NewPopulation newPopulation = new NewPopulation(populationSize);
                 for (int i = 0; i < populationSize; i++) {
-                    newPopulation.set(i, chromosomeFactory.createCopy(population.get(i)));
+                    newPopulation.set(i, 
+                            chromosomeFactory.createCopy(population.get(i)));
 
                 }
                 return newPopulation;
@@ -86,17 +93,18 @@ public class NewFunction1 extends BaseFunction {
 
     @Override
     public void setupSelection() {
-        selection = new NewTournamentSelection(seed, comparator, populationFactory);
+        selection = new NewTournamentSelection(seed, comparator, 
+                populationFactory);
     }
 
     @Override
     public void setupRecombination() {
-        recombination = new NewSinglePointCrossover(seed, populationFactory, recombinationProbability);
+        recombination = new NewSinglePointCrossover(seed, populationFactory, 
+                recombinationProbability);
     }
 
     @Override
     public void setupMutation() {
         mutation = new NewBinaryMutation(seed, mutationProbability);
     }
-
 }

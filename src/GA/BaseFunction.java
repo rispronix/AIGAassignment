@@ -17,8 +17,6 @@ import selection.NewTournamentSelection;
  */
 public abstract class BaseFunction {
 
-    protected Random seed;
-
     protected NewFitnessFunction ff;
     protected NewBaseFitnessComparator comparator;
     protected NewBaseChromosomeFactory chromosomeFactory;
@@ -26,14 +24,15 @@ public abstract class BaseFunction {
     protected NewTournamentSelection selection;
     protected NewSinglePointCrossover recombination;
     protected NewBaseMutation mutation;
-    
-    protected int chromosomeSize;
-    protected int generationCount;
-    protected int populationSize; 
-    
-    protected double recombinationProbability;
-    protected double mutationProbability;
-    
+
+    protected Random seed;
+
+    protected int generationCount = 50;//default parameter
+    protected int populationSize = 50;//default parameter
+
+    protected double recombinationProbability = 0.5;//default parameter
+    protected double mutationProbability = 0.05;//default parameter
+
     protected NewPopulation population;
     protected NewBaseChromosome best;
 
@@ -41,23 +40,42 @@ public abstract class BaseFunction {
         this.seed = seed;
     }
 
-    public BaseFunction(Random seed, double mutationProbability, double recombinationProbability) {
+    public BaseFunction(Random seed,
+            double recombinationProbability,
+            double mutationProbability) {
         this.seed = seed;
         this.mutationProbability = mutationProbability;
         this.recombinationProbability = recombinationProbability;
     }
 
+    public BaseFunction(Random seed,
+            int generationCount,
+            int populationSize,
+            double recombinationProbability,
+            double mutationProbability) {
+        this.seed = seed;
+        this.generationCount = generationCount;
+        this.populationSize = populationSize;
+        this.mutationProbability = mutationProbability;
+        this.recombinationProbability = recombinationProbability;
+    }
+
     public abstract void setupFitnessFunction();
+
     public abstract void setupComparator();
+
     public abstract void setupChromosomeFactory();
+
     public abstract void setupPopulationFactory();
+
     public abstract void setupSelection();
+
     public abstract void setupRecombination();
+
     public abstract void setupMutation();
-    
-    
+
     public void run() {
-        
+
         setupFitnessFunction();
         setupComparator();
         setupChromosomeFactory();
@@ -65,7 +83,7 @@ public abstract class BaseFunction {
         setupSelection();
         setupRecombination();
         setupMutation();
-        
+
         /*
          create starting population
          */
@@ -85,13 +103,14 @@ public abstract class BaseFunction {
             population = selection.select(population);
             population = recombination.recombine(population);
             population = mutation.mutate(population);
-            
+
             population.evaluate();
             best = population.getBest(comparator, best);
         }
         System.out.println("final population: " + population.toString());
         System.out.println("best candidate solution: " + best.toString());
-        System.out.println("population average fitness: " + population.averageFitness());
+        System.out.println("population average fitness: " + 
+                population.averageFitness());
 
     }
 
