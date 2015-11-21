@@ -1,12 +1,12 @@
 package comparators;
 
-import chromosomes.BaseChromosome;
+import chromosomes.NewBaseChromosome;
 
 /**
  *
  * @author rich
  */
 public interface BaseFitnessComparator {
-
-    public int compare(BaseChromosome c1, BaseChromosome c2);
+    
+    public int compare(NewBaseChromosome c1, NewBaseChromosome c2);
 }

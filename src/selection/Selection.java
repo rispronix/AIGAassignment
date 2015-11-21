@@ -1,7 +1,7 @@
 package selection;
 
 import chromosomes.NewBaseChromosome;
-import comparators.NewBaseFitnessComparator;
+import comparators.BaseFitnessComparator;
 import java.util.Random;
 import population.NewPopulation;
 import population.NewPopulationFactory;
@@ -13,11 +13,11 @@ import population.NewPopulationFactory;
 public abstract class Selection {
 
     protected final Random seed;
-    protected final NewBaseFitnessComparator comparator;
+    protected final BaseFitnessComparator comparator;
     protected final NewPopulationFactory populationFactory;
 
     public Selection(Random seed,
-            NewBaseFitnessComparator comparator,
+            BaseFitnessComparator comparator,
             NewPopulationFactory populationFactory) {
         this.seed = seed;
         this.comparator = comparator;

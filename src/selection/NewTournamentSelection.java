@@ -2,7 +2,7 @@ package selection;
 
 
 import chromosomes.NewBaseChromosome;
-import comparators.NewBaseFitnessComparator;
+import comparators.BaseFitnessComparator;
 import java.util.Random;
 import population.NewPopulation;
 import population.NewPopulationFactory;
@@ -14,7 +14,7 @@ import population.NewPopulationFactory;
 public class NewTournamentSelection extends Selection {
 
     public NewTournamentSelection(Random seed,
-            NewBaseFitnessComparator comparator,
+            BaseFitnessComparator comparator,
             NewPopulationFactory populationFactory) {
         super(seed, comparator, populationFactory);
     }
