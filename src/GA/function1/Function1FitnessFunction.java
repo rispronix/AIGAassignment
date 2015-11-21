@@ -1,21 +1,20 @@
 package GA.function1;
 
-import chromosomes.BaseChromosome;
+import chromosomes.NewBaseChromosome;
 import conversions.DecimalFromBinary;
-import fitness.FitnessFunction;
+import fitness.NewFitnessFunction;
 
 /**
  *
  * @author rich
  */
-public class Function1FitnessFunction implements FitnessFunction {
+public class Function1FitnessFunction implements NewFitnessFunction {
 
     DecimalFromBinary dfb = new DecimalFromBinary();
 
     @Override
-    public float calculate(BaseChromosome c) {
-            return (float) Math.pow(dfb.decimalFromBinary(
-                    c.getGenes(0, c.size())), 2);
+    public float calculate(NewBaseChromosome c) {
+        return (float) Math.pow(dfb.decimalFromBinary(
+                c.getGenes(0, c.size())), 2);
     }
-
 }

@@ -1,42 +1,30 @@
 package chromosomes;
 
-import fitness.FitnessFunction;
 import java.util.Random;
 
 /**
  *
  * @author rich
  */
-public class BinaryChromosome extends BaseChromosome {
+public abstract class BinaryChromosome extends NewBaseChromosome {
 
     protected Random seed;
-    protected int size;
-
+    
     public BinaryChromosome(Random seed, int size) {
-        this.seed = seed;
-        this.size = size;
+        super(size);
+        this.seed=seed;
     }
 
-    public BinaryChromosome(BaseChromosome source) {
-    }
+//    public BinaryChromosome(NewBaseChromosome c) {
+//        super(c);
+//    }
 
     @Override
-    public BaseChromosome initialise() {
+    public NewBaseChromosome initialise() {
         genes = new Integer[size];
         for (int i = 0; i < size; i++) {
             genes[i] = seed.nextInt(2);
         }
         return this;
     }
-
-//    @Override
-//    public float evaluate(FitnessFunction ff) {
-//        return fitness = ff.calculate(this);
-//    }
-
-    @Override
-    public float evaluate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

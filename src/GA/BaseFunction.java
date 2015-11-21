@@ -1,15 +1,15 @@
 package GA;
 
-import chromosomes.BaseChromosome;
-import chromosomes.BaseChromosomeFactory;
-import comparators.BaseFitnessComparator;
-import fitness.FitnessFunction;
+import chromosomes.NewBaseChromosome;
+import chromosomes.NewBaseChromosomeFactory;
+import comparators.NewBaseFitnessComparator;
+import fitness.NewFitnessFunction;
 import java.util.Random;
-import mutation.BaseMutation;
-import population.Population;
-import population.PopulationFactory;
-import recombination.Recombination;
-import selection.TournamentSelection;
+import mutation.NewBaseMutation;
+import population.NewPopulation;
+import population.NewPopulationFactory;
+import recombination.NewSinglePointCrossover;
+import selection.NewTournamentSelection;
 
 /**
  *
@@ -19,23 +19,23 @@ public abstract class BaseFunction {
 
     protected Random seed;
 
-    protected FitnessFunction ff;
-    protected BaseFitnessComparator comparator;
-    protected BaseChromosomeFactory chromosomeFactory;
-    protected PopulationFactory populationFactory;
-    protected TournamentSelection selection;
-    protected Recombination recombination;
-    protected BaseMutation mutation;
+    protected NewFitnessFunction ff;
+    protected NewBaseFitnessComparator comparator;
+    protected NewBaseChromosomeFactory chromosomeFactory;
+    protected NewPopulationFactory populationFactory;
+    protected NewTournamentSelection selection;
+    protected NewSinglePointCrossover recombination;
+    protected NewBaseMutation mutation;
     
-    protected int geneQty;
+    protected int chromosomeSize;
     protected int generationCount;
     protected int populationSize; 
     
     protected double recombinationProbability;
     protected double mutationProbability;
     
-    protected Population population;
-    protected BaseChromosome best;
+    protected NewPopulation population;
+    protected NewBaseChromosome best;
 
     public BaseFunction(Random seed) {
         this.seed = seed;
@@ -57,18 +57,29 @@ public abstract class BaseFunction {
     
     
     public void run() {
+        
+        setupFitnessFunction();
+        setupComparator();
+        setupChromosomeFactory();
+        setupPopulationFactory();
+        setupSelection();
+        setupRecombination();
+        setupMutation();
+        
         /*
          create starting population
          */
         population = populationFactory.createNew();
         population.evaluate();
-
+//        System.out.println("population: "+population.toString());
         /*
          initialise placeholder chromosome for best candidate solution so far
          */
         best = chromosomeFactory.createNew();
         best.evaluate();
 
+        System.out.println("\nBase Function class");
+        System.out.println("starting population: " + population.toString());
         // loop evolution
         for (int i = 0; i < generationCount; i++) {
             population = selection.select(population);
@@ -78,10 +89,13 @@ public abstract class BaseFunction {
             population.evaluate();
             best = population.getBest(comparator, best);
         }
+        System.out.println("final population: " + population.toString());
+        System.out.println("best candidate solution: " + best.toString());
+        System.out.println("population average fitness: " + population.averageFitness());
 
     }
 
-    public BaseChromosome getBest() {
+    public NewBaseChromosome getBest() {
         return best;
     }
 }

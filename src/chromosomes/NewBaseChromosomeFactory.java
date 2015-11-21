@@ -6,7 +6,13 @@ package chromosomes;
  */
 public abstract class NewBaseChromosomeFactory {
     
-    public abstract BaseChromosome createNew();
+    public abstract NewBaseChromosome createNew();
 
-    public abstract BaseChromosome createCopy(BaseChromosome c);
+    public NewBaseChromosome createCopy(NewBaseChromosome c){
+        
+        NewBaseChromosome copy = createNew();
+        copy.setGenes(c);
+        copy.setFitness(c.fitness());
+        return copy;
+    }
 }
