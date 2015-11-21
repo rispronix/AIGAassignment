@@ -4,7 +4,6 @@ import GA.BaseFunction;
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
 import comparators.CompareMax;
-import conversions.DecimalFromBinary;
 import java.util.Random;
 import population.Population;
 import population.PopulationFactory;
@@ -15,7 +14,6 @@ import population.PopulationFactory;
  */
 public class newFunction1 extends BaseFunction {
 
-    DecimalFromBinary dfb = new DecimalFromBinary();
 
     public newFunction1(Random seed) {
         super(seed);
@@ -29,29 +27,16 @@ public class newFunction1 extends BaseFunction {
 
     @Override
     public void setupFitnessFunction() {
-        /*
-         maximise x^2
-         */
-        ff = (BaseChromosome c) -> {
-            return (float) Math.pow(dfb.decimalFromBinary(
-                    c.getGenes(0, geneQty)), 2);
-        };
+        ff = new Function1FitnessFunction();
     }
 
     @Override
     public void setupComparator() {
-        /*
-         define comparator to prefer higher valued fitnesses
-         */
         comparator = new CompareMax();
     }
 
     @Override
     public void setupChromosomeFactory() {
-        /*
-         define factory to produce binary string chromosomes with predefined
-         length and fitness function
-         */
         chromosomeFactory = new BaseChromosomeFactory() {
 
             @Override
@@ -78,10 +63,6 @@ public class newFunction1 extends BaseFunction {
 
     @Override
     public void setupPopulationFactory() {
-        /*
-         Define Factory to produce population with predefined
-         population size and chromosome factory
-         */
         populationFactory = new PopulationFactory() {
 
             @Override
