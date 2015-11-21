@@ -27,9 +27,9 @@ public class Function3 {
     private Recombination recombination;
     private BaseMutation mutation;
     
-    private int geneQty = 10;
-    private int generationCount = 50;
-    private int populationSize=50; 
+    private int chromosomeSize = 10;
+    private int generationCount = 500;
+    private int populationSize=500; 
     
     private double recombinationProbability=0.5;
     private double mutationProbability=0.05;
@@ -78,8 +78,8 @@ public class Function3 {
 
                     @Override
                     public BaseChromosome initialise() {
-                        genes = new Float[geneQty];
-                        for (int i = 0; i < geneQty; i++) {
+                        genes = new Float[chromosomeSize];
+                        for (int i = 0; i < chromosomeSize; i++) {
                             genes[i] = (seed.nextFloat() * 1024 - 512) / 100;
                         }
                         return this;
@@ -123,7 +123,7 @@ public class Function3 {
 
             @Override
             public BaseChromosome mutateGene(BaseChromosome c) {
-                int index = seed.nextInt(geneQty);
+                int index = seed.nextInt(chromosomeSize);
                 c.setGene(index, (float) c.getGene(index) + (float) seed.nextGaussian());
                 return c;
             }
@@ -134,8 +134,8 @@ public class Function3 {
          */
         population = populationFactory.createNew();
         population.evaluate();
-//        System.out.println("\nFunction3: floating point encoding");
-//        System.out.println("starting population: " + population.toString());
+        System.out.println("\nFunction3: floating point encoding");
+        System.out.println("starting population: " + population.toString());
 
         /*
          initialise placeholder chromosome for best candidate solution so far
@@ -155,9 +155,9 @@ public class Function3 {
         /*
          display results
          */
-//        System.out.println("final population: " + population.toString());
-//        System.out.println("best candidate solution: " + best.toString());
-//        System.out.println("population average fitness: " + population.averageFitness());
+        System.out.println("final population: " + population.toString());
+        System.out.println("best candidate solution: " + best.toString());
+        System.out.println("population average fitness: " + population.averageFitness());
 //        return best.fitness();
     }
 

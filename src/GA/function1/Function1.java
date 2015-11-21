@@ -28,7 +28,7 @@ public class Function1 {
     private TournamentSelection s;
     private Recombination r;
     private BaseMutation m;
-    private final int geneQty = 8;// binary string to represent values 0 to 255
+    private final int chromosomeSize = 8;// binary string to represent values 0 to 255
     private final int populationSize = 10;// arbitrary and modifiable 
     private double mutationProbability = 0.05;
     private double recombinationProbability = 0.5;
@@ -51,7 +51,7 @@ public class Function1 {
          maximise x^2
          */
         ff = (BaseChromosome c) -> {
-            return (float) Math.pow(dfb.decimalFromBinary(c.getGenes(0, geneQty)), 2);
+            return (float) Math.pow(dfb.decimalFromBinary(c.getGenes(0, chromosomeSize)), 2);
         };
 
         /*
@@ -71,8 +71,8 @@ public class Function1 {
 
                     @Override
                     public BaseChromosome initialise() {
-                        genes = new Integer[geneQty];
-                        for (int i = 0; i < geneQty; i++) {
+                        genes = new Integer[chromosomeSize];
+                        for (int i = 0; i < chromosomeSize; i++) {
                             genes[i] = seed.nextInt(2);
                         }
                         return this;
@@ -117,7 +117,7 @@ public class Function1 {
 
             @Override
             public BaseChromosome mutateGene(BaseChromosome c) {
-                int index = seed.nextInt(geneQty);
+                int index = seed.nextInt(chromosomeSize);
                 c.setGene(index, 1 - (int) c.getGene(index));
                 return c;
             }

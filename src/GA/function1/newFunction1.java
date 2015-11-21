@@ -3,6 +3,7 @@ package GA.function1;
 import GA.BaseFunction;
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
+import chromosomes.BinaryChromosome;
 import comparators.CompareMax;
 import java.util.Random;
 import population.Population;
@@ -13,7 +14,6 @@ import population.PopulationFactory;
  * @author rich
  */
 public class newFunction1 extends BaseFunction {
-
 
     public newFunction1(Random seed) {
         super(seed);
@@ -41,22 +41,12 @@ public class newFunction1 extends BaseFunction {
 
             @Override
             public BaseChromosome createNew() {
-                return new BaseChromosome() {
+                return new BinaryChromosome(seed, 8).initialise();
+            }
 
-                    @Override
-                    public BaseChromosome initialise() {
-                        genes = new Integer[geneQty];
-                        for (int i = 0; i < geneQty; i++) {
-                            genes[i] = seed.nextInt(2);
-                        }
-                        return this;
-                    }
-
-                    @Override
-                    public float evaluate() {
-                        return fitness = ff.calculate(this);
-                    }
-                }.initialise();
+            @Override
+            public BaseChromosome createCopy(BaseChromosome c) {
+                return new BinaryChromosome(c);
             }
         };
     }
