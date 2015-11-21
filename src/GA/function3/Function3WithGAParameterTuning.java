@@ -1,60 +1,55 @@
-package function1;
+package GA.function3;
 
-import java.util.Random;
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
-import comparators.CompareMax;
-import comparators.FitnessComparator;
+import comparators.CompareMin;
+import comparators.BaseFitnessComparator;
 import fitness.FitnessFunction;
+import GA.function1.Function1;
+import java.util.Random;
+import mutation.BaseMutation;
 import population.Population;
 import population.PopulationFactory;
 import recombination.Recombination;
 import selection.TournamentSelection;
-import conversions.DecimalFromBinary;
-import mutation.BaseMutation;
 
 /**
  *
  * @author rich
  */
-public class Function1 {
+public class Function3WithGAParameterTuning {
 
-    private Random seed;
-    private FitnessFunction ff;
-    private final DecimalFromBinary dfb = new DecimalFromBinary();
-    private BaseChromosomeFactory chromosomeFactory;
-    private FitnessComparator comparator;// higher = better
-    private TournamentSelection s;
-    private Recombination r;
-    private BaseMutation m;
-    private final int geneQty = 8;// binary string to represent values 0 to 255
-    private final int populationSize = 10;// arbitrary and modifiable 
-    private double mutationProbability = 0.05;
-    private double recombinationProbability = 0.5;
+    private Random seed=new Random();
+
+    private final FitnessFunction ff;
+    private final BaseFitnessComparator comparator;
+    private final BaseChromosomeFactory chromosomeFactory;
+    private final TournamentSelection s;
+    private final Recombination r;
+    private final BaseMutation m;
+    private final int generationCount = 100;
+    private final int geneQty = 2;// two float typed variables
+    private final int populationSize = 100;// arbitrary and modifiable 
+    private final double recombinationProbability = 1;
+    private final double mutationProbability = 0.5;
     private Population population;
+    BaseChromosome best;
 
-    public Function1(Random seed) {
-        this.seed = seed;        
-    }
+    public Function3WithGAParameterTuning() {
 
-    public Function1(Random seed, double mutationProbability, double recombinationProbability) {
-        this.seed = seed;        
-        this.mutationProbability=mutationProbability;
-        this.recombinationProbability=recombinationProbability;
-    }
-
-    public float run() {
         /*
-         maximise x^2
+         minimise fitness of function1 with GA searching for parameters
          */
         ff = (BaseChromosome c) -> {
-            return (float) Math.pow(dfb.decimalFromBinary(c.getGenes(0, geneQty)), 2);
+            Function3 f = new Function3(seed, (double) c.getGene(0), (double) c.getGene(1));
+            f.run();
+            return f.getBestFitness();
         };
-
+        
         /*
-         define comparator to prefer higher valued fitnesses
+         define comparator to prefer lower valued fitnesses
          */
-        comparator = new CompareMax();
+        comparator = new CompareMin();
 
         /*
          define factory to produce binary string chromosomes with predefined
@@ -68,10 +63,12 @@ public class Function1 {
 
                     @Override
                     public BaseChromosome initialise() {
-                        genes = new Integer[geneQty];
-                        for (int i = 0; i < geneQty; i++) {
-                            genes[i] = seed.nextInt(2);
-                        }
+                        genes = new Double[geneQty];
+//                        for (int i = 0; i < geneQty; i++) {
+//                            genes[i] = seed.nextDouble();
+//                        }
+                        genes[0]=0.05;
+                        genes[1]=0.5;
                         return this;
                     }
 
@@ -84,7 +81,7 @@ public class Function1 {
         };
 
         /*
-         Define Factory to produce population with predefined
+         Define factory to produce populations with predefined
          population size and chromosome factory
          */
         PopulationFactory populationFactory = new PopulationFactory() {
@@ -106,7 +103,7 @@ public class Function1 {
         };
 
         /*
-         define selection, recombination, and mutation operations
+         define selection, recombination, and mutation operators
          */
         s = new TournamentSelection(seed, comparator, populationFactory);
         r = new Recombination(seed, populationFactory, recombinationProbability);
@@ -115,7 +112,7 @@ public class Function1 {
             @Override
             public BaseChromosome mutateGene(BaseChromosome c) {
                 int index = seed.nextInt(geneQty);
-                c.setGene(index, 1 - (int) c.getGene(index));
+                c.setGene(index, (double) c.getGene(index) + seed.nextGaussian() / 5);
                 return c;
             }
         };
@@ -125,27 +122,43 @@ public class Function1 {
          */
         population = populationFactory.createNew();
         population.evaluate();
-        System.out.println("\nFunction1: binary encoding");
+        System.out.println("\nFunction1 with GA parameter tuning: floating point encoding");
         System.out.println("starting population: " + population.toString());
 
         /*
          initialise placeholder chromosome for best candidate solution so far
          */
-        BaseChromosome best = chromosomeFactory.createNew();
+        best = chromosomeFactory.createNew();
         best.evaluate();
 
         // loop evolution
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < generationCount; i++) {
+            System.out.println("///////////// searching for optimal parameters //////////////");
             population = s.select(population);
             population = r.singlepointCrossover(population);
             population = m.mutate(population);
             population.evaluate();
             best = population.getBest(comparator, best);
         }
+
+        /*
+         display results
+         */
         System.out.println("final population: " + population.toString());
         System.out.println("best candidate solution: " + best.toString());
         System.out.println("population average fitness: " + population.averageFitness());
-        
+    }
+
+    public float getBestFitness() {
         return best.fitness();
+    }
+    public double getMutationProbability(){
+        return mutationProbability;
+    }
+    public double getRecombinationProbability(){
+        return recombinationProbability;
+    }
+    public Function3 getBest(){
+        return best.
     }
 }

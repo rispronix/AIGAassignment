@@ -2,7 +2,7 @@ package GA;
 
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
-import comparators.FitnessComparator;
+import comparators.BaseFitnessComparator;
 import fitness.FitnessFunction;
 import java.util.Random;
 import mutation.BaseMutation;
@@ -20,7 +20,7 @@ public abstract class BaseFunction {
     protected Random seed;
 
     protected FitnessFunction ff;
-    protected FitnessComparator comparator;
+    protected BaseFitnessComparator comparator;
     protected BaseChromosomeFactory chromosomeFactory;
     protected PopulationFactory populationFactory;
     protected TournamentSelection selection;

@@ -2,7 +2,7 @@ package population;
 
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
-import comparators.FitnessComparator;
+import comparators.BaseFitnessComparator;
 import java.util.Arrays;
 
 /**
@@ -25,7 +25,7 @@ public class Population {
         }
     }
 
-    public BaseChromosome getBest(FitnessComparator comparator, BaseChromosome best) {
+    public BaseChromosome getBest(BaseFitnessComparator comparator, BaseChromosome best) {
         for (int i = 0; i < population.length; i++) {
             if (comparator.compare(population[i], best) > 0) {
                 best = population[i];

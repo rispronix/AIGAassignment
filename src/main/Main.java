@@ -1,10 +1,10 @@
 package main;
 
-import function1.Function1;
-import function3.Function3WithGAParameterTuning;
-import function2.Function2Binary;
-import function2.Function2Float;
-import function3.Function3;
+import GA.function1.Function1;
+import GA.function3.Function3WithGAParameterTuning;
+import GA.function2.Function2Binary;
+import GA.function2.Function2Float;
+import GA.function3.Function3;
 import java.util.Random;
 
 /**

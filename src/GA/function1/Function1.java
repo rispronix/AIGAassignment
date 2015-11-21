@@ -1,51 +1,63 @@
-package function2;
+package GA.function1;
 
+import java.util.Random;
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
-import comparators.CompareMin;
-import comparators.FitnessComparator;
-import conversions.DecimalFromBinary;
+import comparators.CompareMax;
+import comparators.BaseFitnessComparator;
 import fitness.FitnessFunction;
-import java.util.Random;
-import mutation.BaseMutation;
 import population.Population;
 import population.PopulationFactory;
 import recombination.Recombination;
 import selection.TournamentSelection;
+import conversions.DecimalFromBinary;
+import mutation.BaseMutation;
 
 /**
  *
  * @author rich
  */
-public class Function2Binary {
+public class Function1 {
 
-    private final FitnessFunction ff;
+    private Random seed;
+    private FitnessFunction ff;
     private final DecimalFromBinary dfb = new DecimalFromBinary();
-    private final int geneQty = 12;// binary string to represent two values -15 to 15
-    private final BaseChromosomeFactory chromosomeFactory;
-    private Population population;
+    private BaseChromosomeFactory chromosomeFactory;
+    private PopulationFactory populationFactory;
+    private BaseFitnessComparator comparator;// higher = better
+    private TournamentSelection s;
+    private Recombination r;
+    private BaseMutation m;
+    private final int geneQty = 8;// binary string to represent values 0 to 255
     private final int populationSize = 10;// arbitrary and modifiable 
-    private final FitnessComparator comparator;// lower = better
-    private final TournamentSelection s;
-    private final Recombination r;
-    private final double recombinationProbability = 0.5;
-    private final BaseMutation m;
-    private final double mutationProbability = 0.05;
+    private double mutationProbability = 0.05;
+    private double recombinationProbability = 0.5;
+    private Population population;
 
-    public Function2Binary(Random seed) {
+    public Function1(Random seed) {
+        this.seed = seed;
+    }
+
+    public Function1(Random seed,
+            double mutationProbability,
+            double recombinationProbability) {
+        this.seed = seed;
+        this.mutationProbability = mutationProbability;
+        this.recombinationProbability = recombinationProbability;
+    }
+
+    public float run() {
         /*
-         minimise x^2 + y^2
+         maximise x^2
          */
         ff = (BaseChromosome c) -> {
-            float x = dfb.decimalFromBinary(c.getGenes(0, 5)) - 15;
-            float y = dfb.decimalFromBinary(c.getGenes(5, c.size())) - 15;
-            return (float) (0.26 * (x * x * y * y) - 0.48 * x * y);
+            return (float) Math.pow(dfb.decimalFromBinary(c.getGenes(0, geneQty)), 2);
         };
 
         /*
-         define comparator to prefer lower valued fitnesses
+         define comparator to prefer higher valued fitnesses
          */
-        comparator = new CompareMin();
+        comparator = new CompareMax();
 
         /*
          define factory to produce binary string chromosomes with predefined
@@ -75,10 +87,10 @@ public class Function2Binary {
         };
 
         /*
-         Define factory to produce population with predefined
+         Define Factory to produce population with predefined
          population size and chromosome factory
          */
-        PopulationFactory populationFactory = new PopulationFactory() {
+        populationFactory = new PopulationFactory() {
 
             @Override
             public Population createNew() {
@@ -97,7 +109,7 @@ public class Function2Binary {
         };
 
         /*
-         define selection, recombination, and mutation operators
+         define selection, recombination, and mutation operations
          */
         s = new TournamentSelection(seed, comparator, populationFactory);
         r = new Recombination(seed, populationFactory, recombinationProbability);
@@ -116,8 +128,8 @@ public class Function2Binary {
          */
         population = populationFactory.createNew();
         population.evaluate();
-        System.out.println("\nFunction2: binary encoding");
-        System.out.println("starting population:" + population.toString());
+        System.out.println("\nFunction1: binary encoding");
+        System.out.println("starting population: " + population.toString());
 
         /*
          initialise placeholder chromosome for best candidate solution so far
@@ -136,5 +148,7 @@ public class Function2Binary {
         System.out.println("final population: " + population.toString());
         System.out.println("best candidate solution: " + best.toString());
         System.out.println("population average fitness: " + population.averageFitness());
+
+        return best.fitness();
     }
 }

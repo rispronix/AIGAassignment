@@ -1,11 +1,10 @@
-package function3;
+package GA.function3;
 
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
 import comparators.CompareMin;
-import comparators.FitnessComparator;
+import comparators.BaseFitnessComparator;
 import fitness.FitnessFunction;
-import function1.Function1;
 import java.util.Random;
 import mutation.BaseMutation;
 import population.Population;
@@ -17,35 +16,51 @@ import selection.TournamentSelection;
  *
  * @author rich
  */
-public class Function3WithGAParameterTuning {
+public class Function3 {
 
-    private Random seed=new Random();
+    private final Random seed;
 
-    private final FitnessFunction ff;
-    private final FitnessComparator comparator;
-    private final BaseChromosomeFactory chromosomeFactory;
-    private final TournamentSelection s;
-    private final Recombination r;
-    private final BaseMutation m;
-    private final int generationCount = 100;
-    private final int geneQty = 2;// two float typed variables
-    private final int populationSize = 100;// arbitrary and modifiable 
-    private final double recombinationProbability = 1;
-    private final double mutationProbability = 0.5;
+    private FitnessFunction ff;
+    private BaseFitnessComparator comparator;
+    private BaseChromosomeFactory chromosomeFactory;
+    private TournamentSelection selection;
+    private Recombination recombination;
+    private BaseMutation mutation;
+    
+    private int geneQty = 10;
+    private int generationCount = 50;
+    private int populationSize=50; 
+    
+    private double recombinationProbability=0.5;
+    private double mutationProbability=0.05;
+    
     private Population population;
-    BaseChromosome best;
+    private BaseChromosome best;
 
-    public Function3WithGAParameterTuning() {
+    public Function3(Random seed) {
+        this.seed = seed;
+    }
+
+    public Function3(Random seed, double mutationProbability, double recombinationProbability) {
+        this.seed = seed;
+        this.mutationProbability = mutationProbability;
+        this.recombinationProbability = recombinationProbability;
+    }
+
+    public void run() {
 
         /*
-         minimise fitness of function1 with GA searching for parameters
+         minimise ...
          */
         ff = (BaseChromosome c) -> {
-            Function3 f = new Function3(seed, (double) c.getGene(0), (double) c.getGene(1));
-            f.run();
-            return f.getBestFitness();
+            float result = 10 * c.size();
+            for (int i = 0; i < c.size(); i++) {
+                float value = (float) c.getGene(i);
+                result += value * value - 10 * Math.cos(2 * Math.PI * value);
+            }
+            return result;
         };
-        
+
         /*
          define comparator to prefer lower valued fitnesses
          */
@@ -63,12 +78,10 @@ public class Function3WithGAParameterTuning {
 
                     @Override
                     public BaseChromosome initialise() {
-                        genes = new Double[geneQty];
-//                        for (int i = 0; i < geneQty; i++) {
-//                            genes[i] = seed.nextDouble();
-//                        }
-                        genes[0]=0.05;
-                        genes[1]=0.5;
+                        genes = new Float[geneQty];
+                        for (int i = 0; i < geneQty; i++) {
+                            genes[i] = (seed.nextFloat() * 1024 - 512) / 100;
+                        }
                         return this;
                     }
 
@@ -96,7 +109,6 @@ public class Function3WithGAParameterTuning {
                 Population newPopulation = new Population(populationSize);
                 for (int i = 0; i < populationSize; i++) {
                     newPopulation.set(i, chromosomeFactory.createCopy(population.get(i)));
-
                 }
                 return newPopulation;
             }
@@ -105,14 +117,14 @@ public class Function3WithGAParameterTuning {
         /*
          define selection, recombination, and mutation operators
          */
-        s = new TournamentSelection(seed, comparator, populationFactory);
-        r = new Recombination(seed, populationFactory, recombinationProbability);
-        m = new BaseMutation(seed, mutationProbability) {
+        selection = new TournamentSelection(seed, comparator, populationFactory);
+        recombination = new Recombination(seed, populationFactory, recombinationProbability);
+        mutation = new BaseMutation(seed, mutationProbability) {
 
             @Override
             public BaseChromosome mutateGene(BaseChromosome c) {
                 int index = seed.nextInt(geneQty);
-                c.setGene(index, (double) c.getGene(index) + seed.nextGaussian() / 5);
+                c.setGene(index, (float) c.getGene(index) + (float) seed.nextGaussian());
                 return c;
             }
         };
@@ -122,8 +134,8 @@ public class Function3WithGAParameterTuning {
          */
         population = populationFactory.createNew();
         population.evaluate();
-        System.out.println("\nFunction1 with GA parameter tuning: floating point encoding");
-        System.out.println("starting population: " + population.toString());
+//        System.out.println("\nFunction3: floating point encoding");
+//        System.out.println("starting population: " + population.toString());
 
         /*
          initialise placeholder chromosome for best candidate solution so far
@@ -133,10 +145,9 @@ public class Function3WithGAParameterTuning {
 
         // loop evolution
         for (int i = 0; i < generationCount; i++) {
-            System.out.println("///////////// searching for optimal parameters //////////////");
-            population = s.select(population);
-            population = r.singlepointCrossover(population);
-            population = m.mutate(population);
+            population = selection.select(population);
+            population = recombination.singlepointCrossover(population);
+            population = mutation.mutate(population);
             population.evaluate();
             best = population.getBest(comparator, best);
         }
@@ -144,21 +155,13 @@ public class Function3WithGAParameterTuning {
         /*
          display results
          */
-        System.out.println("final population: " + population.toString());
-        System.out.println("best candidate solution: " + best.toString());
-        System.out.println("population average fitness: " + population.averageFitness());
+//        System.out.println("final population: " + population.toString());
+//        System.out.println("best candidate solution: " + best.toString());
+//        System.out.println("population average fitness: " + population.averageFitness());
+//        return best.fitness();
     }
 
     public float getBestFitness() {
         return best.fitness();
-    }
-    public double getMutationProbability(){
-        return mutationProbability;
-    }
-    public double getRecombinationProbability(){
-        return recombinationProbability;
-    }
-    public Function3 getBest(){
-        return best.
     }
 }

@@ -2,7 +2,7 @@ package selection;
 
 import java.util.Random;
 import chromosomes.BaseChromosome;
-import comparators.FitnessComparator;
+import comparators.BaseFitnessComparator;
 import population.Population;
 import population.PopulationFactory;
 
@@ -13,11 +13,11 @@ import population.PopulationFactory;
 public class TournamentSelection {
 
     private final Random seed;
-    private final FitnessComparator comparator;
+    private final BaseFitnessComparator comparator;
     private final PopulationFactory populationFactory;
 
     public TournamentSelection(Random seed,
-            FitnessComparator comparator,
+            BaseFitnessComparator comparator,
             PopulationFactory populationFactory) {
         this.seed = seed;
         this.comparator = comparator;

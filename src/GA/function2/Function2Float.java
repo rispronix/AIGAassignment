@@ -1,9 +1,9 @@
-package function2;
+package GA.function2;
 
 import chromosomes.BaseChromosome;
 import chromosomes.BaseChromosomeFactory;
 import comparators.CompareMin;
-import comparators.FitnessComparator;
+import comparators.BaseFitnessComparator;
 import fitness.FitnessFunction;
 import java.util.Random;
 import mutation.BaseMutation;
@@ -19,7 +19,7 @@ import selection.TournamentSelection;
 public class Function2Float {
 
     private final FitnessFunction ff;
-    private final FitnessComparator comparator;
+    private final BaseFitnessComparator comparator;
     private final BaseChromosomeFactory chromosomeFactory;
     private final TournamentSelection s;
     private final Recombination r;

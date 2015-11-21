@@ -6,7 +6,7 @@ import chromosomes.BaseChromosome;
  *
  * @author rich
  */
-public class CompareMin implements FitnessComparator {
+public class CompareMin implements BaseFitnessComparator {
 
     @Override
     public int compare(BaseChromosome c1, BaseChromosome c2) {
