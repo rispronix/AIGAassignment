@@ -1,21 +1,26 @@
 package GA;
 
-import chromosomes.BaseChromosome;
-import chromosomes.BaseChromosomeFactory;
+import java.util.Random;
+import java.util.ArrayList;
+
 import comparators.BaseFitnessComparator;
 import fitness.FitnessFunction;
-import java.util.Random;
+import chromosomes.BaseChromosome;
+import chromosomes.BaseChromosomeFactory;
 import mutation.BaseMutation;
 import population.Population;
 import population.PopulationFactory;
 import recombination.SinglePointCrossover;
 import selection.TournamentSelection;
+import stats.RunStatistics;
 
 /**
  *
  * @author rich
  */
 public abstract class BaseFunction {
+
+    protected Random seed;
 
     protected FitnessFunction ff;
     protected BaseFitnessComparator comparator;
@@ -25,8 +30,6 @@ public abstract class BaseFunction {
     protected SinglePointCrossover recombination;
     protected BaseMutation mutation;
 
-    protected Random seed;
-
     protected int generationCount = 50;//default parameter
     protected int populationSize = 50;//default parameter
 
@@ -35,6 +38,7 @@ public abstract class BaseFunction {
 
     protected Population population;
     protected BaseChromosome best;
+    protected ArrayList<RunStatistics> stats;
 
     public BaseFunction(Random seed) {
         this.seed = seed;
@@ -84,37 +88,51 @@ public abstract class BaseFunction {
         setupRecombination();
         setupMutation();
 
-        /*
-         create starting population
-         */
         population = populationFactory.createNew();
         population.evaluate();
-//        System.out.println("population: "+population.toString());
-        /*
-         initialise placeholder chromosome for best candidate solution so far
-         */
-        best = chromosomeFactory.createNew();
-        best.evaluate();
+        best = chromosomeFactory.createCopy(population.getBest(best));
 
-        System.out.println("\nBase Function class");
-        System.out.println("starting population: " + population.toString());
-        // loop evolution
-        for (int i = 0; i < generationCount; i++) {
+        stats = new ArrayList();
+        stats.add(new RunStatistics(0, population.averageFitness(),
+                chromosomeFactory.createCopy(best)));
+
+//        System.out.println("\nBase Function class");
+//        System.out.println("starting population: " + population.toString());
+
+        for (int i = 1; i < generationCount; i++) {
             population = selection.select(population);
             population = recombination.recombine(population);
             population = mutation.mutate(population);
 
             population.evaluate();
-            best = population.getBest(comparator, best);
+            best = population.getBest(best);
+            stats.add(new RunStatistics(i, population.averageFitness(),
+                    chromosomeFactory.createCopy(best)));
         }
-        System.out.println("final population: " + population.toString());
-        System.out.println("best candidate solution: " + best.toString());
-        System.out.println("population average fitness: " + 
-                population.averageFitness());
+//        System.out.println("final population: " + population.toString());
+//        System.out.println("best candidate solution: " + best.toString());
+//        System.out.println("population average fitness: "
+//                + population.averageFitness());
+    }
 
+    public ArrayList<RunStatistics> getStats() {
+        return stats;
+    }
+
+    public int getGenerationCount() {
+        return generationCount;
+    }
+
+    public int getPopulationSize() {
+        return populationSize;
     }
 
     public BaseChromosome getBest() {
         return best;
+    }
+    
+    public void resetBest(){
+        best = chromosomeFactory.createNew();
+        best.evaluate();
     }
 }

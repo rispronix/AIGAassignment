@@ -87,12 +87,14 @@ public class Function1 extends BaseFunction {
 
             @Override
             public Population createNew() {
-                return new Population(populationSize, chromosomeFactory);
+                return new Population(populationSize,
+                        chromosomeFactory, comparator);
             }
 
             @Override
             public Population createCopy(Population population) {
-                Population newPopulation = new Population(populationSize);
+                Population newPopulation = new Population(populationSize,
+                        comparator);
                 for (int i = 0; i < populationSize; i++) {
                     newPopulation.set(i,
                             chromosomeFactory.createCopy(population.get(i)));

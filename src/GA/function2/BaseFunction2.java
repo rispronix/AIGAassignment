@@ -46,22 +46,26 @@ public abstract class BaseFunction2 extends BaseFunction {
 
             @Override
             public Population createNew() {
-                return new Population(populationSize, chromosomeFactory);
+                return new Population(populationSize,
+                        chromosomeFactory, comparator);
             }
 
             @Override
             public Population createCopy(Population population) {
-                Population copy = new Population(populationSize);
+                Population copy = new Population(populationSize, comparator);
                 for (int i = 0; i < populationSize; i++) {
-                    copy.set(i, chromosomeFactory.createCopy(population.get(i)));
+                    copy.set(i, chromosomeFactory.createCopy(
+                            population.get(i)));
 
                 }
                 return copy;
             }
-        }; }
+        };
+    }
 
     @Override
     public void setupSelection() {
-        selection = new TournamentSelection(seed, comparator, populationFactory);
+        selection = new TournamentSelection(seed, 
+                comparator, populationFactory);
     }
 }

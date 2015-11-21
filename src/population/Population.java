@@ -12,20 +12,26 @@ import java.util.Arrays;
 public class Population {
 
     private final BaseChromosome[] population;
+    private final BaseFitnessComparator comparator;
     private float averageFitness = 0;
 
-    public Population(int size) {
+    public Population(int size, BaseFitnessComparator comparator) {
         population = new BaseChromosome[size];
+        this.comparator = comparator;
     }
 
-    public Population(int size, BaseChromosomeFactory chromosomeFactory) {
+    public Population(int size, BaseChromosomeFactory chromosomeFactory, BaseFitnessComparator comparator) {
         population = new BaseChromosome[size];
+        this.comparator = comparator;
         for (int i = 0; i < size; i++) {
             population[i] = chromosomeFactory.createNew();
         }
     }
 
-    public BaseChromosome getBest(BaseFitnessComparator comparator, BaseChromosome best) {
+    public BaseChromosome getBest(BaseChromosome best) {
+        if (best == null) {
+            best = population[0];
+        }
         for (BaseChromosome chromosome : population) {
             if (comparator.compare(chromosome, best) > 0) {
                 best = chromosome;
