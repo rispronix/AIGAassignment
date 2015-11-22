@@ -27,5 +27,6 @@ public class AverageNRuns {
         }
         double average = sum/numberOfRunsToAverage;
         System.out.println("Average over " + numberOfRunsToAverage + " runs: " + average+"\n\n");
+        System.out.println();
     }
 }

@@ -1,4 +1,4 @@
-package geneticAlgorithm.parameterTuning;
+package geneticAlgorithm.function3;
 
 import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
@@ -16,19 +16,19 @@ import selection.BestOfFour;
  *
  * @author rich
  */
-public class ProbabilitySearch extends GA {
+public class Function3ProbabilitySearch extends GA {
 
     protected int chromosomeSize = 2;
 
-    public ProbabilitySearch(Random seed) {
+    public Function3ProbabilitySearch(Random seed) {
         super(seed);
     }
 
-    public ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability) {
+    public Function3ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability) {
         super(seed, recombinationProbability, mutationProbability);
     }
 
-    public ProbabilitySearch(Random seed,
+    public Function3ProbabilitySearch(Random seed,
             int generationCount,
             int populationSize,
             double recombinationProbability,
@@ -42,7 +42,7 @@ public class ProbabilitySearch extends GA {
     @Override
     public void setupFitnessFunction() {
         ff = (Chromosome c) -> {
-            GA ga = new Function3BestOfFourSelection(seed,
+            GA ga = new Function3BestOfFourSelection(seed,1000,1000,
                     (double) c.getGene(0),
                     (double) c.getGene(1),
                     10);
@@ -66,8 +66,8 @@ public class ProbabilitySearch extends GA {
 //                            genes[i] = seed.nextDouble();
 //                        }
 
-                        genes[0] = 1.0;//recombination
-                        genes[1] = 0.1;//mutation
+                        genes[0] = seed.nextDouble();//recombination
+                        genes[1] = seed.nextDouble();//mutation
 
                         return this;
                     }
