@@ -26,7 +26,7 @@ public class Main {
 //        new Function2Float(seed).run();
 //        new Function3(seed,500,500,0.5,0.05,10).run();
 //        new AverageNRuns(10, new Function3MergeRecombination(seed, 500, 500, 1, 0.1,  10));
-        new AverageNRuns(10, new Function3MergeRecombination(seed, 200, 200, 1, 0.1, 10));
-        new AverageNRuns(1, new ProbabilitySearch(seed, 200, 200, 1, 0.1));
+        new AverageNRuns(10, new Function3MergeRecombination(seed, 100, 100, 1, 0.1, 10));
+        new AverageNRuns(10, new ProbabilitySearch(seed, 100, 100, 1, 0.1));
     }
 }
