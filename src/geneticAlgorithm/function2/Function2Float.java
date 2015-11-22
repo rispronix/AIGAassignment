@@ -45,8 +45,10 @@ public class Function2Float extends BaseFunction2 {
         ff = (Chromosome c) -> {
             float x = (float) c.getGene(0);
             float y = (float) c.getGene(1);
-            return (float) Math.abs(0.26 * (x * x * y * y)
-                    - 0.48 * x * y);
+//            return (float) Math.abs(0.26 * (x * x * y * y)////////////////////
+//                    - 0.48 * x * y);/////////////////////////ERROR////////////
+            return (float) (0.26 * (x * x * y * y)////////////////////////////
+                    - 0.48 * x * y);/////////////////////////ERROR////////////
         };
     }
 
