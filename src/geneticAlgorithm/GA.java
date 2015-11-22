@@ -83,6 +83,7 @@ public abstract class GA {
         setupFitnessFunction();
         setupComparator();
         setupChromosomeFactory();
+        setupFitnessFunction();
         setupPopulationFactory();
         setupSelection();
         setupRecombination();
@@ -145,6 +146,14 @@ public abstract class GA {
 
     public Chromosome getBest() {
         return best;
+    }
+
+    public void setRecombinationProbability(double recombinationProbability) {
+        this.recombinationProbability = recombinationProbability;
+    }
+
+    public void setMutationProbability(double mutationProbability) {
+        this.mutationProbability = mutationProbability;
     }
 
     public void resetBest() {

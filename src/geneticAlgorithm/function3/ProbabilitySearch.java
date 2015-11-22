@@ -4,7 +4,6 @@ import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
 import comparators.CompareMin;
 import geneticAlgorithm.GA;
-import geneticAlgorithm.function3.Function3BestOfFourSelection;
 import java.util.Random;
 import mutation.ProbabilityMutationDouble;
 import population.Population;
@@ -16,19 +15,42 @@ import selection.BestOfFour;
  *
  * @author rich
  */
-public class Function3ProbabilitySearch extends GA {
+public class ProbabilitySearch extends GA {
 
     protected int chromosomeSize = 2;
+    protected GA function;
 
-    public Function3ProbabilitySearch(Random seed) {
+//    public ProbabilitySearch(Random seed, GA function) {
+//        super(seed);
+//        this.function = function;
+//    }
+//
+//    public ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability, GA function) {
+//        super(seed, recombinationProbability, mutationProbability);
+//        this.function = function;
+//    }
+//
+//    public ProbabilitySearch(Random seed,
+//            int generationCount,
+//            int populationSize,
+//            double recombinationProbability,
+//            double mutationProbability,
+//            GA function) {
+//        super(seed, generationCount,
+//                populationSize,
+//                recombinationProbability,
+//                mutationProbability);
+//        this.function = function;
+//    }
+    public ProbabilitySearch(Random seed) {
         super(seed);
     }
 
-    public Function3ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability) {
+    public ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability) {
         super(seed, recombinationProbability, mutationProbability);
     }
 
-    public Function3ProbabilitySearch(Random seed,
+    public ProbabilitySearch(Random seed,
             int generationCount,
             int populationSize,
             double recombinationProbability,
@@ -39,6 +61,21 @@ public class Function3ProbabilitySearch extends GA {
                 mutationProbability);
     }
 
+//    @Override
+//    public void setupFitnessFunction() {
+////        float fitness;
+//        ff = (Chromosome c) -> {
+//            function.setRecombinationProbability((double)c.getGene(0));
+//            function.setMutationProbability((double)c.getGene(1));
+//            function.run();
+//            float fitness = function.getBest().fitness();
+//            function.resetBest();
+//            return fitness;
+////            float fitness = function.getBest().fitness();
+////            function.resetBest();            
+////            return bestFitness;
+//        };
+//    }
     @Override
     public void setupFitnessFunction() {
         ff = (Chromosome c) -> {
