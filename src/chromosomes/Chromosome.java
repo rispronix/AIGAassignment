@@ -21,14 +21,6 @@ public abstract class Chromosome <T> {
         this.size = size;
     }
 
-//    public NewBaseChromosome(NewBaseChromosome source) {
-//        size = source.size();
-//        T[] copy = (T[]) source.genes.clone();
-//        for (int i = 0; i < size; i++) {
-//            genes[i] = (T) copy[i];
-//        }
-//    }
-
     public void setGenes(Chromosome c) {
         T[] copy = (T[]) c.genes.clone();
         for (int i = 0; i < c.size(); i++) {

@@ -10,7 +10,8 @@ import recombination.FloatMergeRecombination;
  */
 public class Function3MergeRecombination extends Function3{
 
-    public Function3MergeRecombination(Random seed, int chromosomeSize) {
+    public Function3MergeRecombination(Random seed, 
+            int chromosomeSize) {
         super(seed, chromosomeSize);
     }
 
@@ -38,6 +39,9 @@ public class Function3MergeRecombination extends Function3{
     
     @Override
     public void setupRecombination(){
-        recombination = new FloatMergeRecombination(seed, populationFactory, recombinationProbability,chromosomeFactory);
+        recombination = new FloatMergeRecombination(seed, 
+                populationFactory, 
+                recombinationProbability,
+                chromosomeFactory);
     }
 }

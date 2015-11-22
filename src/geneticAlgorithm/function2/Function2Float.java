@@ -16,7 +16,7 @@ public class Function2Float extends BaseFunction2 {
     /*
      hardcoded as only two variables needed
      */
-    private final int chromosomeSize = 2;
+    protected final int chromosomeSize = 2;
 
     public Function2Float(Random seed) {
         super(seed);

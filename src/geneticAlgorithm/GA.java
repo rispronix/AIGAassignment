@@ -33,7 +33,7 @@ public abstract class GA {
     protected int generationCount = 50;//default parameter
     protected int populationSize = 50;//default parameter
 
-    protected double recombinationProbability = 0.5;//default parameter
+    protected double recombinationProbability = 0.85;//default parameter
     protected double mutationProbability = 0.05;//default parameter
 
     protected Population population;
