@@ -30,6 +30,8 @@ public abstract class Recombination {
                 newp.set(i, recombine(
                         population.get(i),
                         population.get(i + 1 % population.size() - 1)));
+            } else {
+                newp.set(i, population.get(i));
             }
         }
         return newp;
