@@ -93,12 +93,16 @@ public abstract class GA {
         best = chromosomeFactory.createCopy(population.getBest(best));
 
         stats = new ArrayList();
-        stats.add(new RunStatistics(0, population.averageFitness(),
-                chromosomeFactory.createCopy(best)));
+        
+            stats.add(new RunStatistics(0,
+                    population.averageFitness(),
+                    chromosomeFactory.createCopy(best),
+                    mutationProbability,
+                    recombinationProbability,
+                    populationSize));
 
 //        System.out.println("\nBase Function class");
 //        System.out.println("starting population: " + population.toString());
-
         for (int i = 1; i < generationCount; i++) {
             population = selection.select(population);
             population = recombination.recombine(population);
@@ -106,13 +110,25 @@ public abstract class GA {
 
             population.evaluate();
             best = population.getBest(best);
-            stats.add(new RunStatistics(i, population.averageFitness(),
-                    chromosomeFactory.createCopy(best)));
+            stats.add(new RunStatistics(i,
+                    population.averageFitness(),
+                    chromosomeFactory.createCopy(best),
+                    mutationProbability,
+                    recombinationProbability,
+                    populationSize));
         }
 //        System.out.println("final population: " + population.toString());
 //        System.out.println("best candidate solution: " + best.toString());
 //        System.out.println("population average fitness: "
 //                + population.averageFitness());
+    }
+
+    public double getRecombinationProbability() {
+        return recombinationProbability;
+    }
+
+    public double getMutationProbability() {
+        return mutationProbability;
     }
 
     public ArrayList<RunStatistics> getStats() {
@@ -130,8 +146,8 @@ public abstract class GA {
     public Chromosome getBest() {
         return best;
     }
-    
-    public void resetBest(){
+
+    public void resetBest() {
         best = chromosomeFactory.createNew();
         best.evaluate();
     }

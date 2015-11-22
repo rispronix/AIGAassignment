@@ -20,6 +20,14 @@ public class ProbabilitySearch extends GA {
 
     protected int chromosomeSize = 2;
 
+    public ProbabilitySearch(Random seed) {
+        super(seed);
+    }
+
+    public ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability) {
+        super(seed, recombinationProbability, mutationProbability);
+    }
+
     public ProbabilitySearch(Random seed,
             int generationCount,
             int populationSize,

@@ -16,6 +16,7 @@ public class AverageNRuns {
             function.run();
             runs.add(function.getStats());
             sum += function.getBest().fitness();
+            System.out.println("best fitness (run "+i+"): "+function.getBest());
             function.resetBest();
         }
 
