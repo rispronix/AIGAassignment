@@ -21,6 +21,10 @@ public class ProbabilityMutationDouble extends Mutation {
         if (seed.nextDouble() < probability) {
             value = seed.nextGaussian() / 100;
             index = seed.nextInt(c.size());
+            
+            if(1<(double)c.getGene(index) + value){
+                
+            }
             c.setGene(index, (double) c.getGene(index) + value);
         }
         return c;

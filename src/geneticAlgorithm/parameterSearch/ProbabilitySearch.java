@@ -4,12 +4,15 @@ import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
 import comparators.CompareMin;
 import geneticAlgorithm.GA;
+import java.util.ArrayList;
 import java.util.Random;
 import mutation.ProbabilityMutationDouble;
 import population.Population;
 import population.PopulationFactory;
 import recombination.DoubleMerge;
+import recombination.SinglePointCrossover;
 import selection.BestOfFour;
+import stats.RunStatistics;
 
 /**
  *
@@ -49,15 +52,15 @@ public class ProbabilitySearch extends GA {
     @Override
     public void setupFitnessFunction() {
         ff = (Chromosome c) -> {
-            function.setRecombinationProbability((double)c.getGene(0));
-            function.setMutationProbability((double)c.getGene(1));
+            function.setRecombinationProbability((double) c.getGene(0));
+            function.setMutationProbability((double) c.getGene(1));
             function.run();
             double fitness = function.getBest().fitness();
             function.resetBest();
             return fitness;
         };
     }
-    
+
     @Override
     public void setupChromosomeFactory() {
         chromosomeFactory = new ChromosomeFactory() {
@@ -123,14 +126,65 @@ public class ProbabilitySearch extends GA {
 
     @Override
     public void setupRecombination() {
-        recombination = new DoubleMerge(seed,
-                populationFactory,
-                recombinationProbability,
-                chromosomeFactory);
+//        recombination = new DoubleMerge(seed,
+//                populationFactory,
+//                recombinationProbability,
+//                chromosomeFactory);
+        recombination = new SinglePointCrossover(seed, populationFactory,mutationProbability);
     }
 
     @Override
     public void setupMutation() {
         mutation = new ProbabilityMutationDouble(seed, mutationProbability);
+    }
+
+    @Override
+    public void run() {
+
+        setupFitnessFunction();
+        setupComparator();
+        setupChromosomeFactory();
+        setupFitnessFunction();
+        setupPopulationFactory();
+        setupSelection();
+        setupRecombination();
+        setupMutation();
+
+        population = populationFactory.createNew();
+        population.evaluate();
+        best = chromosomeFactory.createCopy(population.getBest(best));
+
+        stats = new ArrayList();
+
+        stats.add(new RunStatistics(0,
+                population.averageFitness(),
+                chromosomeFactory.createCopy(best),
+                mutationProbability,
+                recombinationProbability,
+                populationSize));
+
+        System.out.print('\n'+toString());
+        for (int i = 1; i <= generationCount; i++) {
+            System.out.printf("\nRunning parameter search: "
+                    + "recombinationProbability= %.5f,"
+                    + " mutationProbability= %.5f",
+                    function.getRecombinationProbability(), 
+                    function.getMutationProbability());
+            population = selection.select(population);
+            population = recombination.recombine(population);
+            population = mutation.mutate(population);
+
+            population.evaluate();
+            best = population.getBest(best);
+            stats.add(new RunStatistics(i,
+                    population.averageFitness(),
+                    chromosomeFactory.createCopy(best),
+                    mutationProbability,
+                    recombinationProbability,
+                    populationSize));
+//            System.out.println(stats.get(i).toString());
+        }
+        System.out.printf("\nBest of probability parameter search: " 
+                + best.toString() + '\n', best.fitness());
     }
 }

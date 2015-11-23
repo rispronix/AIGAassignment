@@ -56,11 +56,9 @@ public class RunStatistics {
 
     @Override
     public String toString() {
-        return "RunStatistics{" + "generation=" + generation +
+        return "generation=" + generation +
+                ", best=" + best.fitness() + 
                 ", average=" + average + 
-                ", best fitness=" + best.fitness() + 
-                ", mutationProbability=" + mutationProbability + 
-                ", recombinationProbability=" + recombinationProbability +
-                ", populationSize=" + populationSize + '}';
+                ", best="+best.toString()+'}';
     }
 }

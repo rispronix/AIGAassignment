@@ -94,16 +94,14 @@ public abstract class GA {
         best = chromosomeFactory.createCopy(population.getBest(best));
 
         stats = new ArrayList();
-        
-            stats.add(new RunStatistics(0,
-                    population.averageFitness(),
-                    chromosomeFactory.createCopy(best),
-                    mutationProbability,
-                    recombinationProbability,
-                    populationSize));
 
-            System.out.println("Running GA");
-            System.out.println(toString());
+        stats.add(new RunStatistics(0,
+                population.averageFitness(),
+                chromosomeFactory.createCopy(best),
+                mutationProbability,
+                recombinationProbability,
+                populationSize));
+        
         for (int i = 1; i < generationCount; i++) {
             population = selection.select(population);
             population = recombination.recombine(population);
@@ -163,5 +161,5 @@ public abstract class GA {
                 ", populationSize=" + populationSize + 
                 ", recombinationProbability=" + recombinationProbability + 
                 ", mutationProbability=" + mutationProbability + '}';
-    }
+    }    
 }

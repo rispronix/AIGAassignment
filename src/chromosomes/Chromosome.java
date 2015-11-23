@@ -54,7 +54,7 @@ public abstract class Chromosome <T>{
 
     @Override
     public String toString() {
-        return "Chromosome{" + String.format("fitness=%.2f", fitness) + 
+        return "Chromosome{" + String.format("fitness=%.5f", fitness) + 
                 ",\tgenes=" + Arrays.toString(genes) + '}';
     }
 }
