@@ -16,7 +16,8 @@ public class FloatGaussianMutation extends Mutation {
     @Override
     public Chromosome mutateGene(Chromosome c) {
         int index = seed.nextInt(c.size());
-        c.setGene(index, (float) c.getGene(index) + (float) seed.nextGaussian());
+        c.setGene(index, (float) c.getGene(index) + 
+                (float) seed.nextGaussian());
         return c;
     }
 }

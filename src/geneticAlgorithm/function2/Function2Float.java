@@ -2,8 +2,8 @@ package geneticAlgorithm.function2;
 
 import java.util.Random;
 
-import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
+import chromosomes.Chromosome;
 import mutation.FloatGaussianMutation;
 import recombination.SinglePointCrossover;
 
@@ -45,10 +45,8 @@ public class Function2Float extends BaseFunction2 {
         ff = (Chromosome c) -> {
             float x = (float) c.getGene(0);
             float y = (float) c.getGene(1);
-//            return (float) Math.abs(0.26 * (x * x * y * y)////////////////////
-//                    - 0.48 * x * y);/////////////////////////ERROR////////////
-            return (float) (0.26 * (x * x * y * y)////////////////////////////
-                    - 0.48 * x * y);/////////////////////////ERROR////////////
+            return (float) (0.26 * (x * x + y * y)
+                    - 0.48 * x * y);
         };
     }
 
@@ -70,7 +68,7 @@ public class Function2Float extends BaseFunction2 {
                     }
 
                     @Override
-                    public float evaluate() {
+                    public double evaluate() {
                         return fitness = ff.calculate(this);
                     }
                 }.initialise();

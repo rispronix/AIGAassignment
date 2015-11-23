@@ -1,8 +1,8 @@
 package geneticAlgorithm.function2;
 
 import chromosomes.BinaryChromosome;
-import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
+import chromosomes.Chromosome;
 import conversions.DecimalFromBinary;
 import java.util.Random;
 import mutation.BinaryMutation;
@@ -45,12 +45,10 @@ public class Function2Binary extends BaseFunction2 {
     public void setupFitnessFunction() {
         DecimalFromBinary dfb = new DecimalFromBinary();
         ff = (Chromosome c) -> {
-            float x = dfb.decimalFromBinary(
-                    c.getGenes(0, 5)) - 15;
-            float y = dfb.decimalFromBinary(
-                    c.getGenes(5, c.size())) - 15;
-            return (float) (0.26 * (x * x * y * y)
-                    - 0.48 * x * y);
+            double x = dfb.decimalFromBinary(c.getGenes(0, 5)) - 15;
+            double y = dfb.decimalFromBinary(c.getGenes(5, c.size())) - 15;
+            return  0.26 * (x * x + y * y)
+                    - 0.48 * x * y;
         };
     }
 
@@ -63,7 +61,7 @@ public class Function2Binary extends BaseFunction2 {
                 return new BinaryChromosome(seed, chromosomeSize) {
 
                     @Override
-                    public float evaluate() {
+                    public double evaluate() {
                         return fitness = ff.calculate(this);
                     }
                 }.initialise();
@@ -83,5 +81,4 @@ public class Function2Binary extends BaseFunction2 {
         mutation = new BinaryMutation(seed,
                 mutationProbability);
     }
-
 }

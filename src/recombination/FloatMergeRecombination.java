@@ -1,8 +1,8 @@
 package recombination;
 
 import java.util.Random;
-import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
+import chromosomes.Chromosome;
 import population.PopulationFactory;
 
 /**
@@ -28,7 +28,8 @@ public class FloatMergeRecombination extends Recombination {
         for (int i = 0; i < c1.size(); i++) {
             c1Gene = (float) c1.getGene(i);
             c2Gene = (float) c2.getGene(i);
-            mutationValue = (float) seed.nextDouble() * Math.abs(c1Gene - c2Gene);
+            mutationValue = (float) seed.nextDouble() * 
+                    Math.abs(c1Gene - c2Gene);
             child.setGene(i, Math.min(c1Gene, c2Gene) + mutationValue);
         }
         return child;

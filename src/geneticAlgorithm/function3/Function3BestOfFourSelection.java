@@ -13,29 +13,29 @@ public class Function3BestOfFourSelection extends Function3MergeRecombination {
         super(seed, chromosomeSize);
     }
 
-    public Function3BestOfFourSelection(Random seed, 
-            double recombinationProbability, 
-            double mutationProbability, 
+    public Function3BestOfFourSelection(Random seed,
+            double recombinationProbability,
+            double mutationProbability,
             int chromosomeSize) {
         super(seed, recombinationProbability,
                 mutationProbability,
                 chromosomeSize);
     }
 
-    public Function3BestOfFourSelection(Random seed, 
+    public Function3BestOfFourSelection(Random seed,
             int generationCount,
             int populationSize,
             double recombinationProbability,
             double mutationProbability,
             int chromosomeSize) {
-        super(seed, generationCount, 
-                populationSize, 
-                recombinationProbability, 
-                mutationProbability, 
+        super(seed, generationCount,
+                populationSize,
+                recombinationProbability,
+                mutationProbability,
                 chromosomeSize);
     }
-    
-        @Override
+
+    @Override
     public void setupSelection() {
         selection = new BestOfFour(seed, comparator,
                 populationFactory);

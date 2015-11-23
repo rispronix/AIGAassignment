@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import comparators.FitnessComparator;
 import fitness.FitnessFunction;
-import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
+import chromosomes.Chromosome;
 import mutation.Mutation;
 import population.Population;
 import population.PopulationFactory;
@@ -102,8 +102,8 @@ public abstract class GA {
                     recombinationProbability,
                     populationSize));
 
-//        System.out.println("\nBase Function class");
-//        System.out.println("starting population: " + population.toString());
+            System.out.println("Running GA");
+            System.out.println(toString());
         for (int i = 1; i < generationCount; i++) {
             population = selection.select(population);
             population = recombination.recombine(population);
@@ -118,10 +118,6 @@ public abstract class GA {
                     recombinationProbability,
                     populationSize));
         }
-//        System.out.println("final population: " + population.toString());
-//        System.out.println("best candidate solution: " + best.toString());
-//        System.out.println("population average fitness: "
-//                + population.averageFitness());
     }
 
     public double getRecombinationProbability() {
@@ -159,5 +155,13 @@ public abstract class GA {
     public void resetBest() {
         best = chromosomeFactory.createNew();
         best.evaluate();
+    }
+
+    @Override
+    public String toString() {
+        return "GA{" + "generationCount=" + generationCount + 
+                ", populationSize=" + populationSize + 
+                ", recombinationProbability=" + recombinationProbability + 
+                ", mutationProbability=" + mutationProbability + '}';
     }
 }

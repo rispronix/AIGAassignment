@@ -12,7 +12,9 @@ import population.PopulationFactory;
  */
 public class BestOfFour extends Selection {
 
-    public BestOfFour(Random seed, FitnessComparator comparator, PopulationFactory populationFactory) {
+    public BestOfFour(Random seed, 
+            FitnessComparator comparator, 
+            PopulationFactory populationFactory) {
         super(seed, comparator, populationFactory);
     }
 
@@ -34,5 +36,4 @@ public class BestOfFour extends Selection {
     public Chromosome select(Chromosome c1, Chromosome c2) {
         return comparator.compare(c1, c2) < 0 ? c2 : c1;
     }
-
 }

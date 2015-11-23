@@ -1,9 +1,10 @@
-package geneticAlgorithm.function3;
+package geneticAlgorithm.parameterSearch;
 
 import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
 import comparators.CompareMin;
 import geneticAlgorithm.GA;
+import geneticAlgorithm.function3.Function3BestOfFourSelection;
 import java.util.Random;
 import mutation.ProbabilityMutationDouble;
 import population.Population;
@@ -20,73 +21,76 @@ public class ProbabilitySearch extends GA {
     protected int chromosomeSize = 2;
     protected GA function;
 
-//    public ProbabilitySearch(Random seed, GA function) {
-//        super(seed);
-//        this.function = function;
-//    }
-//
-//    public ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability, GA function) {
-//        super(seed, recombinationProbability, mutationProbability);
-//        this.function = function;
-//    }
-//
-//    public ProbabilitySearch(Random seed,
-//            int generationCount,
-//            int populationSize,
-//            double recombinationProbability,
-//            double mutationProbability,
-//            GA function) {
-//        super(seed, generationCount,
-//                populationSize,
-//                recombinationProbability,
-//                mutationProbability);
-//        this.function = function;
-//    }
-    public ProbabilitySearch(Random seed) {
+    public ProbabilitySearch(Random seed, GA function) {
         super(seed);
+        this.function = function;
     }
 
-    public ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability) {
+    public ProbabilitySearch(Random seed,
+            double recombinationProbability,
+            double mutationProbability,
+            GA function) {
         super(seed, recombinationProbability, mutationProbability);
+        this.function = function;
     }
 
     public ProbabilitySearch(Random seed,
             int generationCount,
             int populationSize,
             double recombinationProbability,
-            double mutationProbability) {
+            double mutationProbability,
+            GA function) {
         super(seed, generationCount,
                 populationSize,
                 recombinationProbability,
                 mutationProbability);
+        this.function = function;
     }
-
-//    @Override
-//    public void setupFitnessFunction() {
-////        float fitness;
-//        ff = (Chromosome c) -> {
-//            function.setRecombinationProbability((double)c.getGene(0));
-//            function.setMutationProbability((double)c.getGene(1));
-//            function.run();
-//            float fitness = function.getBest().fitness();
-//            function.resetBest();
-//            return fitness;
-////            float fitness = function.getBest().fitness();
-////            function.resetBest();            
-////            return bestFitness;
-//        };
+//    public ProbabilitySearch(Random seed) {
+//        super(seed);
 //    }
+//
+//    public ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability) {
+//        super(seed, recombinationProbability, mutationProbability);
+//    }
+//
+//    public ProbabilitySearch(Random seed,
+//            int generationCount,
+//            int populationSize,
+//            double recombinationProbability,
+//            double mutationProbability) {
+//        super(seed, generationCount,
+//                populationSize,
+//                recombinationProbability,
+//                mutationProbability);
+//    }
+
     @Override
     public void setupFitnessFunction() {
+//        float fitness;
         ff = (Chromosome c) -> {
-            GA ga = new Function3BestOfFourSelection(seed,1000,1000,
-                    (double) c.getGene(0),
-                    (double) c.getGene(1),
-                    10);
-            ga.run();
-            return ga.getBest().fitness();
+            function.setRecombinationProbability((double)c.getGene(0));
+            function.setMutationProbability((double)c.getGene(1));
+            function.run();
+            double fitness = function.getBest().fitness();
+            function.resetBest();
+            return fitness;
+//            float fitness = function.getBest().fitness();
+//            function.resetBest();            
+//            return bestFitness;
         };
     }
+//    @Override
+//    public void setupFitnessFunction() {
+//        ff = (Chromosome c) -> {
+//            GA ga = new Function3BestOfFourSelection(seed,1000,1000,
+//                    (double) c.getGene(0),
+//                    (double) c.getGene(1),
+//                    10);
+//            ga.run();
+//            return ga.getBest().fitness();
+//        };
+//    }
 
     @Override
     public void setupChromosomeFactory() {
@@ -99,18 +103,14 @@ public class ProbabilitySearch extends GA {
                     @Override
                     public Chromosome initialise() {
                         genes = new Double[chromosomeSize];
-//                        for (int i = 0; i < chromosomeSize; i++) {
-//                            genes[i] = seed.nextDouble();
-//                        }
-
-                        genes[0] = seed.nextDouble();//recombination
-                        genes[1] = seed.nextDouble();//mutation
-
+                        for (int i = 0; i < chromosomeSize; i++) {
+                            genes[i] = seed.nextDouble();
+                        }
                         return this;
                     }
 
                     @Override
-                    public float evaluate() {
+                    public double evaluate() {
                         fitness = ff.calculate(this);
                         return fitness;
                     }

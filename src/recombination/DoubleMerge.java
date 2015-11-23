@@ -1,8 +1,8 @@
 package recombination;
 
 import java.util.Random;
-import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
+import chromosomes.Chromosome;
 import population.PopulationFactory;
 
 /**
@@ -28,7 +28,8 @@ public class DoubleMerge extends Recombination {
         for (int i = 0; i < c1.size(); i++) {
             c1Gene = (double) c1.getGene(i);
             c2Gene = (double) c2.getGene(i);
-            mutationValue = (double) seed.nextDouble() * Math.abs(c1Gene - c2Gene);
+            mutationValue = (double) seed.nextDouble() * 
+                    Math.abs(c1Gene - c2Gene);
             child.setGene(i, Math.min(c1Gene, c2Gene) + mutationValue);
         }
         return child;

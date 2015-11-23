@@ -1,7 +1,7 @@
 package population;
 
-import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
+import chromosomes.Chromosome;
 import comparators.FitnessComparator;
 import java.util.Arrays;
 
@@ -13,14 +13,15 @@ public class Population {
 
     private final Chromosome[] population;
     private final FitnessComparator comparator;
-    private float averageFitness = 0;
+    private double averageFitness = 0;
 
     public Population(int size, FitnessComparator comparator) {
         population = new Chromosome[size];
         this.comparator = comparator;
     }
 
-    public Population(int size, ChromosomeFactory chromosomeFactory, FitnessComparator comparator) {
+    public Population(int size, ChromosomeFactory chromosomeFactory,
+            FitnessComparator comparator) {
         population = new Chromosome[size];
         this.comparator = comparator;
         for (int i = 0; i < size; i++) {
@@ -48,7 +49,7 @@ public class Population {
         return population[index];
     }
 
-    public float evaluate() {
+    public double evaluate() {
         averageFitness = 0;
         for (Chromosome chromosome : population) {
             averageFitness += chromosome.evaluate();
@@ -56,7 +57,7 @@ public class Population {
         return averageFitness = averageFitness / population.length;
     }
 
-    public float averageFitness() {
+    public double averageFitness() {
         return averageFitness;
     }
 
@@ -66,7 +67,8 @@ public class Population {
 
     @Override
     public String toString() {
-        return "Population{" + "population=" + Arrays.toString(population) + ", averageFitness=" + averageFitness + '}';
+        return "Population{" + "population=" + Arrays.toString(population)
+                + String.format(", averageFitness= %.2f}", averageFitness);
     }
 
 }

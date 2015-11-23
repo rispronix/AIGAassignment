@@ -14,11 +14,7 @@ public abstract class BinaryChromosome extends Chromosome {
         super(size);
         this.seed=seed;
     }
-
-//    public BinaryChromosome(NewBaseChromosome c) {
-//        super(c);
-//    }
-
+    
     @Override
     public Chromosome initialise() {
         genes = new Integer[size];

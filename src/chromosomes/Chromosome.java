@@ -7,15 +7,15 @@ import java.util.Arrays;
  * @author rich
  * @param <T>
  */
-public abstract class Chromosome <T> {
+public abstract class Chromosome <T>{
 
     protected T[] genes;
     protected int size;
-    protected float fitness;
+    protected double fitness;
 
     public abstract Chromosome initialise();
 
-    public abstract float evaluate();
+    public abstract double evaluate();
 
     public Chromosome(int size) {
         this.size = size;
@@ -23,7 +23,7 @@ public abstract class Chromosome <T> {
 
     public void setGenes(Chromosome c) {
         T[] copy = (T[]) c.genes.clone();
-        for (int i = 0; i < c.size(); i++) {
+        for (int i = 0; i < size; i++) {
             genes[i] = (T) copy[i];
         }
     }
@@ -40,11 +40,11 @@ public abstract class Chromosome <T> {
         return Arrays.copyOfRange(genes, start, end);
     }
 
-    public void setFitness(float fitness) {
+    public void setFitness(double fitness) {
         this.fitness = fitness;
     }
 
-    public float fitness() {
+    public double fitness() {
         return fitness;
     }
 
@@ -54,6 +54,7 @@ public abstract class Chromosome <T> {
 
     @Override
     public String toString() {
-        return "NewBaseChromosome{" + "fitness=" + fitness + ", genes=" + Arrays.toString(genes) + '}';
+        return "Chromosome{" + String.format("fitness=%.2f", fitness) + 
+                ",\tgenes=" + Arrays.toString(genes) + '}';
     }
 }

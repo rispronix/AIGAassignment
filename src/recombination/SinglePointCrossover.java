@@ -2,7 +2,6 @@ package recombination;
 
 import chromosomes.Chromosome;
 import java.util.Random;
-import population.Population;
 import population.PopulationFactory;
 
 /**
@@ -11,7 +10,9 @@ import population.PopulationFactory;
  */
 public class SinglePointCrossover extends Recombination {
 
-    public SinglePointCrossover(Random seed, PopulationFactory populationFactory, double probability) {
+    public SinglePointCrossover(Random seed,
+            PopulationFactory populationFactory, 
+            double probability) {
         super(seed, populationFactory, probability);
     }
 

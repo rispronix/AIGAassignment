@@ -83,7 +83,7 @@ public class Function3 extends GA {
                     }
 
                     @Override
-                    public float evaluate() {
+                    public double evaluate() {
                         return fitness = ff.calculate(this);
                     }
                 }.initialise();
@@ -131,5 +131,4 @@ public class Function3 extends GA {
     public void setupMutation() {
         mutation = new FloatGaussianMutation(seed, mutationProbability);
     }
-
 }

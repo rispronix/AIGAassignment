@@ -8,5 +8,7 @@ import chromosomes.Chromosome;
  */
 public interface FitnessFunction {
     
-    float calculate(Chromosome c);
+    double calculate(Chromosome c);
+    
+    
 }

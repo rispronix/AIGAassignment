@@ -6,7 +6,6 @@ import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
 import comparators.CompareMax;
 import conversions.DecimalFromBinary;
-import fitness.FitnessFunction;
 import java.util.Random;
 import mutation.BinaryMutation;
 import population.Population;
@@ -46,17 +45,9 @@ public class Function1 extends GA {
 
     @Override
     public void setupFitnessFunction() {
-        ff = new FitnessFunction() {
-
-            DecimalFromBinary dfb = new DecimalFromBinary();
-
-            @Override
-            public float calculate(Chromosome c) {
-
-                return (float) Math.pow(dfb.decimalFromBinary(
-                        c.getGenes(0, c.size())), 2);
-            }
-        };
+        DecimalFromBinary dfb = new DecimalFromBinary();
+        ff = (Chromosome c) -> Math.pow(dfb.decimalFromBinary(
+                c.getGenes(0, c.size())), 2);
     }
 
     @Override
@@ -73,7 +64,7 @@ public class Function1 extends GA {
                 return new BinaryChromosome(seed, chromosomeSize) {
 
                     @Override
-                    public float evaluate() {
+                    public double evaluate() {
                         return fitness = ff.calculate(this);
                     }
                 }.initialise();

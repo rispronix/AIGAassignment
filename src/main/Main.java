@@ -8,7 +8,7 @@ import average.AverageNRuns;
 import geneticAlgorithm.GA;
 import geneticAlgorithm.function3.Function3BestOfFourSelection;
 import geneticAlgorithm.function3.Function3MergeRecombination;
-import geneticAlgorithm.function3.ProbabilitySearch;
+import geneticAlgorithm.parameterSearch.ProbabilitySearch;
 
 import java.util.Random;
 
@@ -23,16 +23,19 @@ public class Main {
 //        Random seed = new Random(1);
         Random seed = new Random(System.currentTimeMillis());
 
-//        new Function1(seed).run();
-//        new Function2Binary(seed).run();
+        new AverageNRuns(10,  new Function1(seed, 50, 50, 0.9, 0.3));
+//        new AverageNRuns(1, new ProbabilitySearch(seed, 10, 10, 0.9, 0.2, new Function1(seed, 50, 50, 0.9, 0.3)));
+//        new AverageNRuns(1, new ProbabilitySearch(seed, 10, 10, 0.9, 0.2, new ProbabilitySearch(seed, 100, 100, new Function1(seed, 50, 50, 0.9, 0.3))));
         
-
+//        new AverageNRuns(10,  new Function2Binary(seed, 50, 50, 0.9, 0.3));
+//        new AverageNRuns(1, new ProbabilitySearch(seed, 100, 100, 0.9, 0.5, new Function2Binary(seed, 50, 50, 0.9, 0.3)));
         
-        new AverageNRuns(10,  new Function2Float(seed, 10, 10, 0.9, 0.3));
-//        new AverageNRuns(10, new ProbabilitySearch(seed,ga));
+//        new AverageNRuns(10,  new Function2Float(seed, 50, 50, 0.9, 0.3));
+//        new AverageNRuns(1, new ProbabilitySearch(seed, 100, 100, 0.9, 0.5, new Function2Float(seed, 50, 50, 0.9, 0.3)));
+        
 //        new AverageNRuns(10, new Function3(seed,100,100, 1, 0.1, 10));
 //        new AverageNRuns(10, new Function3MergeRecombination(seed,100,100, 1, 0.1, 10));
-//        new AverageNRuns(10, new Function3BestOfFourSelection(seed,1000,1000, 0.9, 0.8, 10));
-//        new AverageNRuns(1, new Function3ProbabilitySearch(seed, 10, 10, 0.9, 0.5));
+//        new AverageNRuns(10, new Function3BestOfFourSelection(seed,100,100, 0.9, 0.8, 10));
+//        new AverageNRuns(1, new ProbabilitySearch(seed, 100, 100, 0.9, 0.5, new Function3BestOfFourSelection(seed, 100, 100, 10)));
     }
 }

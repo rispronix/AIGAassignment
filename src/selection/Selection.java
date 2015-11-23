@@ -23,7 +23,9 @@ public abstract class Selection {
         this.comparator = comparator;
         this.populationFactory = populationFactory;
     }
-    
+
     public abstract Population select(Population population);
-    public abstract Chromosome select(Chromosome c1, Chromosome c2);
+
+    public abstract Chromosome select(
+            Chromosome c1, Chromosome c2);
 }
