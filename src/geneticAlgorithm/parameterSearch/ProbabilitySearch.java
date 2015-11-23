@@ -4,7 +4,6 @@ import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
 import comparators.CompareMin;
 import geneticAlgorithm.GA;
-import geneticAlgorithm.function3.Function3BestOfFourSelection;
 import java.util.Random;
 import mutation.ProbabilityMutationDouble;
 import population.Population;
@@ -46,28 +45,9 @@ public class ProbabilitySearch extends GA {
                 mutationProbability);
         this.function = function;
     }
-//    public ProbabilitySearch(Random seed) {
-//        super(seed);
-//    }
-//
-//    public ProbabilitySearch(Random seed, double recombinationProbability, double mutationProbability) {
-//        super(seed, recombinationProbability, mutationProbability);
-//    }
-//
-//    public ProbabilitySearch(Random seed,
-//            int generationCount,
-//            int populationSize,
-//            double recombinationProbability,
-//            double mutationProbability) {
-//        super(seed, generationCount,
-//                populationSize,
-//                recombinationProbability,
-//                mutationProbability);
-//    }
 
     @Override
     public void setupFitnessFunction() {
-//        float fitness;
         ff = (Chromosome c) -> {
             function.setRecombinationProbability((double)c.getGene(0));
             function.setMutationProbability((double)c.getGene(1));
@@ -75,23 +55,9 @@ public class ProbabilitySearch extends GA {
             double fitness = function.getBest().fitness();
             function.resetBest();
             return fitness;
-//            float fitness = function.getBest().fitness();
-//            function.resetBest();            
-//            return bestFitness;
         };
     }
-//    @Override
-//    public void setupFitnessFunction() {
-//        ff = (Chromosome c) -> {
-//            GA ga = new Function3BestOfFourSelection(seed,1000,1000,
-//                    (double) c.getGene(0),
-//                    (double) c.getGene(1),
-//                    10);
-//            ga.run();
-//            return ga.getBest().fitness();
-//        };
-//    }
-
+    
     @Override
     public void setupChromosomeFactory() {
         chromosomeFactory = new ChromosomeFactory() {
