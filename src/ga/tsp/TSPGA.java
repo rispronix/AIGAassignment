@@ -3,12 +3,17 @@ package ga.tsp;
 import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
 import comparators.CompareMin;
+import fitness.FitnessFunction;
 import ga.GA;
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
+import mutation.PermutationMutation;
 import population.Population;
 import population.PopulationFactory;
+import recombination.PermutationRecombination;
 import selection.BestOfFour;
 
 /**
@@ -18,10 +23,13 @@ import selection.BestOfFour;
 public class TSPGA extends GA {
 
     protected final int size;
+    protected ArrayList<Point> points;
+    protected double[][] distanceMatrix;
 
     public TSPGA(Random seed, int size) {
         super(seed);
         this.size = size;
+        setupDistanceMatrix();
     }
 
     public TSPGA(Random seed,
@@ -30,6 +38,7 @@ public class TSPGA extends GA {
         super(seed, recombinationProbability,
                 mutationProbability);
         this.size = size;
+        setupDistanceMatrix();
     }
 
     public TSPGA(Random seed,
@@ -42,6 +51,7 @@ public class TSPGA extends GA {
                 recombinationProbability,
                 mutationProbability);
         this.size = size;
+        setupDistanceMatrix();
     }
 
     @Override
@@ -51,7 +61,19 @@ public class TSPGA extends GA {
          location to the next and loop back to start node
          */
 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ff = new FitnessFunction() {
+            double sum;
+
+            @Override
+            public double calculate(Chromosome c) {
+                sum = 0;
+                for (int i = 0; i < size; i++) {
+                    sum += distanceMatrix[(Integer) c.getGene(i)][(Integer) c.getGene((i + 1) % (size - 1))];
+                }
+
+                return sum;
+            }
+        };
     }
 
     @Override
@@ -70,9 +92,6 @@ public class TSPGA extends GA {
                     @Override
                     public Chromosome initialise() {
                         genes = new Integer[size];
-                        /*
-                         random permutation of 0..size
-                         */
                         for (int i = 0; i < size; i++) {
                             genes[i] = i;
                         }
@@ -119,12 +138,36 @@ public class TSPGA extends GA {
 
     @Override
     public void setupRecombination() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        recombination = new PermutationRecombination(seed,
+                populationFactory,
+                recombinationProbability,
+                chromosomeFactory);
     }
 
     @Override
     public void setupMutation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mutation = new PermutationMutation(seed, mutationProbability);
     }
 
+    private void setupDistanceMatrix() {
+        points = new ArrayList();
+        distanceMatrix = new double[size][size];
+        double distance;
+        double x, y;
+
+        for (int i = 0; i < size; i++) {
+            points.add(new Point(seed.nextInt(1000), seed.nextInt(1000)));
+        }
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                x = points.get(i).x - points.get(j).x;
+                y = points.get(i).y - points.get(j).y;
+
+                distance = Math.sqrt(x * x + y * y);
+                distanceMatrix[i][j] = distance;
+                distanceMatrix[j][i] = distance;
+            }
+        }
+    }
 }

@@ -175,6 +175,7 @@ public class ProbabilitySearch extends GA {
             population = mutation.mutate(population);
 
             population.evaluate();
+            System.out.print(", average: "+population.averageFitness());
             best = population.getBest(best);
             stats.add(new RunStatistics(i,
                     population.averageFitness(),
@@ -182,7 +183,6 @@ public class ProbabilitySearch extends GA {
                     mutationProbability,
                     recombinationProbability,
                     populationSize));
-//            System.out.println(stats.get(i).toString());
         }
         System.out.printf("\nBest of probability parameter search: " 
                 + best.toString() + '\n', best.fitness());
