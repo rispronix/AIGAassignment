@@ -11,7 +11,8 @@ public class RunStatistics {
     private final String title;
     private final int generation;
     private final double average;
-    private final Chromosome best;
+    private  Chromosome best;
+    private  double averageFitness;
     private final double mutationProbability;
     private final double recombinationProbability;
     private final int populationSize;
@@ -30,6 +31,27 @@ public class RunStatistics {
         this.recombinationProbability = recombinationProbability;
         this.populationSize = populationSize;
         this.title=title;
+        averageFitness=0;
+    }
+    public RunStatistics(int generation, 
+            double average,
+            double averageFitness,
+            double mutationProbability,
+            double recombinationProbability, 
+            int populationSize,
+            String title) {
+        this.generation = generation;
+        this.average = average;
+        this.averageFitness = averageFitness;
+        this.mutationProbability = mutationProbability;
+        this.recombinationProbability = recombinationProbability;
+        this.populationSize = populationSize;
+        this.title=title;
+        best=null;
+    }
+
+    public double getAverageFitness() {
+        return averageFitness;
     }
 
     public String getTitle() {

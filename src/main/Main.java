@@ -33,16 +33,16 @@ public class Main {
         new AverageNRuns(10, new Function2Float(seed, 50, 50, 0.9, 0.5));
 
         System.out.print("\nExperiment 4: Function3 (10 variables)");
-        new AverageNRuns(10, new Function3(seed, 100, 100, 0.9, 0.5, 10));
+        new AverageNRuns(10, new Function3(seed, 100, 200, 0.9, 0.5, 10));
 
         System.out.print("\nExperiment 5: Function3 with merge recombination (10 variables)");
-        new AverageNRuns(10, new Function3MergeRecombine(seed, 100, 100, 0.9, 0.5, 10));
+        new AverageNRuns(10, new Function3MergeRecombine(seed, 100, 200, 0.9, 0.5, 10));
 
         System.out.print("\nExperiment 6: Function3 with best of four tournament selection and merge recombination (10 variables)");
-        new AverageNRuns(10, new Function3MergeRecombineAndBoFSelection(seed, 100, 100, 0.9, 0.5, 10));
+        new AverageNRuns(10, new Function3MergeRecombineAndBoFSelection(seed, 100, 200, 0.9, 0.5, 10));
 
         System.out.print("\nExperiment 7: Function3 with best of four tournament selection and merge recombination (20 variables)");
-        new AverageNRuns(10, new Function3MergeRecombineAndBoFSelection(seed, 100, 100, 0.9, 0.5, 20));
+        new AverageNRuns(10, new Function3MergeRecombineAndBoFSelection(seed, 100, 200, 0.9, 0.5, 20));
 
         System.out.print("\nExperiment 8: probability parameter search on function 3 with best of four selection and merge recombination (20 variables)");
         new ProbabilitySearch(seed, 10, 100, 0.9, 0.5, new Function3MergeRecombineAndBoFSelection(seed, 100, 100, 0.9, 0.8, 20)).run();

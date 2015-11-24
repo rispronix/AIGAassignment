@@ -7,7 +7,6 @@ import comparators.FitnessComparator;
 import fitness.FitnessFunction;
 import chromosomes.ChromosomeFactory;
 import chromosomes.Chromosome;
-import fileWriter.WriteToCSV;
 import mutation.Mutation;
 import population.Population;
 import population.PopulationFactory;
