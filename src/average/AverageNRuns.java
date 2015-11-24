@@ -1,5 +1,6 @@
 package average;
 
+import fileWriter.WriteToCSV;
 import ga.GA;
 import java.util.ArrayList;
 import stats.RunStatistics;
@@ -21,6 +22,7 @@ public class AverageNRuns {
             sum += function.getBest().fitness();
             System.out.printf("\nBest of run %d:\t"+function.getBest().toString(), i);
             function.resetBest();
+            new WriteToCSV().WriteToCSV(function.getStats());
         }
 
         double average = sum / numberOfRunsToAverage;

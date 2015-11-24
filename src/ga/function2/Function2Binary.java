@@ -21,6 +21,7 @@ public class Function2Binary extends BaseFunction2 {
 
     public Function2Binary(Random seed) {
         super(seed);
+        title="Function2Binary";
     }
 
     public Function2Binary(Random seed,
@@ -28,6 +29,7 @@ public class Function2Binary extends BaseFunction2 {
             double mutationProbability) {
         super(seed, recombinationProbability,
                 mutationProbability);
+        title="Function2Binary";
     }
 
     public Function2Binary(Random seed,
@@ -39,6 +41,7 @@ public class Function2Binary extends BaseFunction2 {
                 populationSize,
                 recombinationProbability,
                 mutationProbability);
+        title="Function2Binary";
     }
 
     @Override

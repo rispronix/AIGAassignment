@@ -2,7 +2,6 @@ package fileWriter;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -18,8 +17,8 @@ public class WriteToCSV {
 
     public void WriteToCSV(List<RunStatistics> stats) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy HH-mm-ss");
-            File file= new File("result_data/GAResultFile_"+format.format(new Date(System.currentTimeMillis()))+".csv");
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy HH-mm-ss.SSSS");
+            File file = new File("result_data/" + stats.get(0).getTitle() + '_' + format.format(new Date(System.currentTimeMillis())) + ".csv");
             file.createNewFile();
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 //            FileOutputStream writer = new FileOutputStream(new File("result_data/GAResultFile_"+format.format(new Date(System.currentTimeMillis()))));

@@ -15,6 +15,7 @@ public abstract class BaseFunction2 extends GA {
 
     public BaseFunction2(Random seed) {
         super(seed);
+        title = "BaseFunction2";
     }
 
     public BaseFunction2(Random seed,
@@ -22,6 +23,7 @@ public abstract class BaseFunction2 extends GA {
             double mutationProbability) {
         super(seed, recombinationProbability,
                 mutationProbability);
+        title = "BaseFunction2";
     }
 
     public BaseFunction2(Random seed,
@@ -33,6 +35,7 @@ public abstract class BaseFunction2 extends GA {
                 populationSize,
                 recombinationProbability,
                 mutationProbability);
+        title = "BaseFunction2";
     }
 
     @Override
@@ -65,7 +68,7 @@ public abstract class BaseFunction2 extends GA {
 
     @Override
     public void setupSelection() {
-        selection = new TournamentSelection(seed, 
+        selection = new TournamentSelection(seed,
                 comparator, populationFactory);
     }
 }

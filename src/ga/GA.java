@@ -20,8 +20,8 @@ import stats.RunStatistics;
  * @author rich
  */
 public abstract class GA {
-    
-    protected String title="base GA";
+
+    protected String title = "base GA";
 
     protected Random seed;
 
@@ -91,8 +91,8 @@ public abstract class GA {
         setupSelection();
         setupRecombination();
         setupMutation();
-        
-        title.concat("_mprob-"+mutationProbability+"_rprob-"+recombinationProbability+"_psize-"+populationSize+"_gcount-"+generationCount);
+
+        title.concat("_mprob-" + mutationProbability + "_rprob-" + recombinationProbability + "_psize-" + populationSize + "_gcount-" + generationCount);
 
         population = populationFactory.createNew();
         population.evaluate();
@@ -105,8 +105,9 @@ public abstract class GA {
                 chromosomeFactory.createCopy(best),
                 mutationProbability,
                 recombinationProbability,
-                populationSize));
-        
+                populationSize,
+                title));
+
         for (int i = 1; i <= generationCount; i++) {
             population = selection.select(population);
             population = recombination.recombine(population);
@@ -119,8 +120,8 @@ public abstract class GA {
                     chromosomeFactory.createCopy(best),
                     mutationProbability,
                     recombinationProbability,
-                    populationSize));
-//            new WriteToCSV().WriteToCSV(stats);
+                    populationSize,
+                    title));
         }
     }
 
@@ -167,9 +168,9 @@ public abstract class GA {
 
     @Override
     public String toString() {
-        return "GA{" + "generationCount=" + generationCount + 
-                ", populationSize=" + populationSize + 
-                ", recombinationProbability=" + recombinationProbability + 
-                ", mutationProbability=" + mutationProbability + '}';
-    }    
+        return "GA{" + "generationCount=" + generationCount
+                + ", populationSize=" + populationSize
+                + ", recombinationProbability=" + recombinationProbability
+                + ", mutationProbability=" + mutationProbability + '}';
+    }
 }

@@ -23,6 +23,7 @@ public class Function1 extends GA {
 
     public Function1(Random seed) {
         super(seed);
+        title = "Function1";
     }
 
     public Function1(Random seed,
@@ -30,6 +31,7 @@ public class Function1 extends GA {
             double recombinationProbability) {
         super(seed, mutationProbability,
                 recombinationProbability);
+        title = "Function1";
     }
 
     public Function1(Random seed,
@@ -41,6 +43,7 @@ public class Function1 extends GA {
                 populationSize,
                 mutationProbability,
                 recombinationProbability);
+        title = "Function1";
     }
 
     @Override

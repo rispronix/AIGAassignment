@@ -26,6 +26,7 @@ public class ProbabilitySearch extends GA {
     public ProbabilitySearch(Random seed, GA function) {
         super(seed);
         this.function = function;
+        title = "FunctionProbSearch";
     }
 
     public ProbabilitySearch(Random seed,
@@ -34,6 +35,7 @@ public class ProbabilitySearch extends GA {
             GA function) {
         super(seed, recombinationProbability, mutationProbability);
         this.function = function;
+        title = "FunctionProbSearch";
     }
 
     public ProbabilitySearch(Random seed,
@@ -47,6 +49,8 @@ public class ProbabilitySearch extends GA {
                 recombinationProbability,
                 mutationProbability);
         this.function = function;
+        title = "FunctionProbSearch_";
+        title.concat(function.getTitle());
     }
 
     @Override
@@ -126,11 +130,11 @@ public class ProbabilitySearch extends GA {
 
     @Override
     public void setupRecombination() {
-//        recombination = new DoubleMerge(seed,
-//                populationFactory,
-//                recombinationProbability,
-//                chromosomeFactory);
-        recombination = new SinglePointCrossover(seed, populationFactory,mutationProbability);
+        recombination = new DoubleMerge(seed,
+                populationFactory,
+                recombinationProbability,
+                chromosomeFactory);
+//        recombination = new SinglePointCrossover(seed, populationFactory, mutationProbability);
     }
 
     @Override
@@ -161,30 +165,32 @@ public class ProbabilitySearch extends GA {
                 chromosomeFactory.createCopy(best),
                 mutationProbability,
                 recombinationProbability,
-                populationSize));
+                populationSize,
+                title));
 
-        System.out.print('\n'+toString());
+        System.out.print('\n' + toString());
         for (int i = 1; i <= generationCount; i++) {
             System.out.printf("\nRunning parameter search: "
                     + "recombinationProbability= %.5f,"
                     + " mutationProbability= %.5f",
-                    function.getRecombinationProbability(), 
+                    function.getRecombinationProbability(),
                     function.getMutationProbability());
             population = selection.select(population);
             population = recombination.recombine(population);
             population = mutation.mutate(population);
 
             population.evaluate();
-            System.out.print(", average: "+population.averageFitness());
+            System.out.print(", average: " + population.averageFitness());
             best = population.getBest(best);
             stats.add(new RunStatistics(i,
                     population.averageFitness(),
                     chromosomeFactory.createCopy(best),
                     mutationProbability,
                     recombinationProbability,
-                    populationSize));
+                    populationSize,
+                    title));
         }
-        System.out.printf("\nBest of probability parameter search: " 
+        System.out.printf("\nBest of probability parameter search: "
                 + best.toString() + '\n', best.fitness());
     }
 }

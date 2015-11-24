@@ -30,6 +30,7 @@ public class TSPGA extends GA {
         super(seed);
         this.size = size;
         setupDistanceMatrix();
+        title = "TSPGA";
     }
 
     public TSPGA(Random seed,
@@ -39,6 +40,7 @@ public class TSPGA extends GA {
                 mutationProbability);
         this.size = size;
         setupDistanceMatrix();
+        title = "TSPGA";
     }
 
     public TSPGA(Random seed,
@@ -52,6 +54,7 @@ public class TSPGA extends GA {
                 mutationProbability);
         this.size = size;
         setupDistanceMatrix();
+        title = "TSPGA";
     }
 
     @Override

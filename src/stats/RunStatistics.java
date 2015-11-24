@@ -8,6 +8,7 @@ import chromosomes.Chromosome;
  */
 public class RunStatistics {
 
+    private final String title;
     private final int generation;
     private final double average;
     private final Chromosome best;
@@ -20,13 +21,19 @@ public class RunStatistics {
             Chromosome best,
             double mutationProbability,
             double recombinationProbability, 
-            int populationSize) {
+            int populationSize,
+            String title) {
         this.generation = generation;
         this.average = average;
         this.best = best;
         this.mutationProbability = mutationProbability;
         this.recombinationProbability = recombinationProbability;
         this.populationSize = populationSize;
+        this.title=title;
+    }
+
+    public String getTitle() {
+        return title;
     }
     
     public Chromosome getBest() {
