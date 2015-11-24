@@ -22,7 +22,7 @@ public class Function3 extends GA {
     public Function3(Random seed, int chromosomeSize) {
         super(seed);
         this.chromosomeSize = chromosomeSize;
-        title = "Function3Var"+chromosomeSize;
+        title = "Function3Var" + chromosomeSize;
     }
 
     public Function3(Random seed,
@@ -32,7 +32,7 @@ public class Function3 extends GA {
         super(seed, recombinationProbability,
                 mutationProbability);
         this.chromosomeSize = chromosomeSize;
-        title = "Function3Var"+chromosomeSize;
+        title = "Function3Var" + chromosomeSize;
     }
 
     public Function3(Random seed,
@@ -46,7 +46,7 @@ public class Function3 extends GA {
                 recombinationProbability,
                 mutationProbability);
         this.chromosomeSize = chromosomeSize;
-        title = "Function3Var"+chromosomeSize;
+        title = "Function3Var" + chromosomeSize;
     }
 
     @Override
