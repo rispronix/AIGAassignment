@@ -165,6 +165,10 @@ public abstract class GA {
         return title;
     }
 
+    public FitnessComparator getComparator() {
+        return comparator;
+    }
+
     @Override
     public String toString() {
         return "GA{" + "generationCount=" + generationCount

@@ -94,7 +94,7 @@ public class ProbabilitySearch extends GA {
 
     @Override
     public void setupComparator() {
-        comparator = new CompareMin();
+        comparator = function.getComparator();
     }
 
     @Override
