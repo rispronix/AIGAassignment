@@ -20,6 +20,8 @@ import stats.RunStatistics;
  * @author rich
  */
 public abstract class GA {
+    
+    protected String title="base GA";
 
     protected Random seed;
 
@@ -89,6 +91,8 @@ public abstract class GA {
         setupSelection();
         setupRecombination();
         setupMutation();
+        
+        title.concat("_mprob-"+mutationProbability+"_rprob-"+recombinationProbability+"_psize-"+populationSize+"_gcount-"+generationCount);
 
         population = populationFactory.createNew();
         population.evaluate();
@@ -155,6 +159,10 @@ public abstract class GA {
     public void resetBest() {
         best = chromosomeFactory.createNew();
         best.evaluate();
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     @Override
