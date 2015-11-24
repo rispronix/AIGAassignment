@@ -1,6 +1,6 @@
 package average;
 
-import geneticAlgorithm.GA;
+import ga.GA;
 import java.util.ArrayList;
 import stats.RunStatistics;
 

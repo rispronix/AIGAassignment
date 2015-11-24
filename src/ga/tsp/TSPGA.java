@@ -1,62 +1,57 @@
-package geneticAlgorithm.function3;
+package ga.tsp;
 
-import geneticAlgorithm.GA;
 import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
 import comparators.CompareMin;
+import ga.GA;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
-import mutation.FloatGaussianMutation;
 import population.Population;
 import population.PopulationFactory;
-import recombination.SinglePointCrossover;
-import selection.TournamentSelection;
+import selection.BestOfFour;
 
 /**
  *
  * @author rich
  */
-public class Function3 extends GA {
+public class TSPGA extends GA {
 
-    private final int chromosomeSize;
+    protected final int size;
 
-    public Function3(Random seed, int chromosomeSize) {
+    public TSPGA(Random seed, int size) {
         super(seed);
-        this.chromosomeSize = chromosomeSize;
+        this.size = size;
     }
 
-    public Function3(Random seed,
+    public TSPGA(Random seed,
             double recombinationProbability,
-            double mutationProbability,
-            int chromosomeSize) {
+            double mutationProbability, int size) {
         super(seed, recombinationProbability,
                 mutationProbability);
-        this.chromosomeSize = chromosomeSize;
+        this.size = size;
     }
 
-    public Function3(Random seed,
+    public TSPGA(Random seed,
             int generationCount,
             int populationSize,
             double recombinationProbability,
-            double mutationProbability,
-            int chromosomeSize) {
+            double mutationProbability, int size) {
         super(seed, generationCount,
                 populationSize,
                 recombinationProbability,
                 mutationProbability);
-        this.chromosomeSize = chromosomeSize;
+        this.size = size;
     }
 
     @Override
     public void setupFitnessFunction() {
-        ff = (Chromosome c) -> {
-            float result = 10 * c.size();
-            for (int i = 0; i < c.size(); i++) {
-                float value = (float) c.getGene(i);
-                result += value * value - 10 * Math.cos(
-                        2 * Math.PI * value);
-            }
-            return result;
-        };
+        /*
+         refer to precalculated distance matrix and sum one 
+         location to the next and loop back to start node
+         */
+
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -70,15 +65,18 @@ public class Function3 extends GA {
 
             @Override
             public Chromosome createNew() {
-                return new Chromosome(chromosomeSize) {
+                return new Chromosome(size) {
 
                     @Override
                     public Chromosome initialise() {
-                        genes = new Float[chromosomeSize];
-                        for (int i = 0; i < chromosomeSize; i++) {
-                            genes[i] = (seed.nextFloat()
-                                    * 1024 - 512) / 100;
+                        genes = new Integer[size];
+                        /*
+                         random permutation of 0..size
+                         */
+                        for (int i = 0; i < size; i++) {
+                            genes[i] = i;
                         }
+                        Collections.shuffle(Arrays.asList(genes));
                         return this;
                     }
 
@@ -97,9 +95,8 @@ public class Function3 extends GA {
 
             @Override
             public Population createNew() {
-                return new Population(populationSize, 
-                        chromosomeFactory, 
-                        comparator);
+                return new Population(populationSize,
+                        chromosomeFactory, comparator);
             }
 
             @Override
@@ -107,8 +104,8 @@ public class Function3 extends GA {
                 Population newPopulation = new Population(populationSize,
                         comparator);
                 for (int i = 0; i < populationSize; i++) {
-                    newPopulation.set(i, chromosomeFactory.createCopy(
-                            population.get(i)));
+                    newPopulation.set(i,
+                            chromosomeFactory.createCopy(population.get(i)));
                 }
                 return newPopulation;
             }
@@ -117,18 +114,17 @@ public class Function3 extends GA {
 
     @Override
     public void setupSelection() {
-        selection = new TournamentSelection(seed, comparator,
-                populationFactory);
+        selection = new BestOfFour(seed, comparator, populationFactory);
     }
 
     @Override
     public void setupRecombination() {
-        recombination = new SinglePointCrossover(seed, populationFactory,
-                recombinationProbability);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void setupMutation() {
-        mutation = new FloatGaussianMutation(seed, mutationProbability);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

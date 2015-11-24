@@ -1,9 +1,9 @@
-package geneticAlgorithm.parameterSearch;
+package ga.parameterSearch;
 
 import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
 import comparators.CompareMin;
-import geneticAlgorithm.GA;
+import ga.GA;
 import java.util.ArrayList;
 import java.util.Random;
 import mutation.ProbabilityMutationDouble;

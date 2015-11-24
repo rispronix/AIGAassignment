@@ -1,6 +1,6 @@
-package geneticAlgorithm.function1;
+package ga.function1;
 
-import geneticAlgorithm.GA;
+import ga.GA;
 import chromosomes.BinaryChromosome;
 import chromosomes.Chromosome;
 import chromosomes.ChromosomeFactory;
@@ -89,7 +89,6 @@ public class Function1 extends GA {
                 for (int i = 0; i < populationSize; i++) {
                     newPopulation.set(i,
                             chromosomeFactory.createCopy(population.get(i)));
-
                 }
                 return newPopulation;
             }

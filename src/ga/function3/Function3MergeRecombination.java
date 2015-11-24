@@ -1,5 +1,5 @@
 
-package geneticAlgorithm.function3;
+package ga.function3;
 
 import java.util.Random;
 import recombination.FloatMergeRecombination;

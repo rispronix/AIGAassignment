@@ -1,6 +1,6 @@
-package geneticAlgorithm.function2;
+package ga.function2;
 
-import geneticAlgorithm.GA;
+import ga.GA;
 import comparators.CompareMin;
 import java.util.Random;
 import population.Population;

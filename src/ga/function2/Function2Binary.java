@@ -1,35 +1,36 @@
-package geneticAlgorithm.function2;
+package ga.function2;
 
-import java.util.Random;
-
+import chromosomes.BinaryChromosome;
 import chromosomes.ChromosomeFactory;
 import chromosomes.Chromosome;
-import mutation.FloatGaussianMutation;
+import conversions.DecimalFromBinary;
+import java.util.Random;
+import mutation.BinaryMutation;
 import recombination.SinglePointCrossover;
 
 /**
  *
  * @author rich
  */
-public class Function2Float extends BaseFunction2 {
+public class Function2Binary extends BaseFunction2 {
 
     /*
-     hardcoded as only two variables needed
+     hardcoded as two variables each with range of 31 is 12 bits
      */
-    protected final int chromosomeSize = 2;
+    private final int chromosomeSize = 12;
 
-    public Function2Float(Random seed) {
+    public Function2Binary(Random seed) {
         super(seed);
     }
 
-    public Function2Float(Random seed,
+    public Function2Binary(Random seed,
             double recombinationProbability,
             double mutationProbability) {
         super(seed, recombinationProbability,
                 mutationProbability);
     }
 
-    public Function2Float(Random seed,
+    public Function2Binary(Random seed,
             int generationCount,
             int populationSize,
             double recombinationProbability,
@@ -42,11 +43,12 @@ public class Function2Float extends BaseFunction2 {
 
     @Override
     public void setupFitnessFunction() {
+        DecimalFromBinary dfb = new DecimalFromBinary();
         ff = (Chromosome c) -> {
-            float x = (float) c.getGene(0);
-            float y = (float) c.getGene(1);
-            return (float) (0.26 * (x * x + y * y)
-                    - 0.48 * x * y);
+            double x = dfb.decimalFromBinary(c.getGenes(0, 5)) - 15;
+            double y = dfb.decimalFromBinary(c.getGenes(5, c.size())) - 15;
+            return  0.26 * (x * x + y * y)
+                    - 0.48 * x * y;
         };
     }
 
@@ -56,16 +58,7 @@ public class Function2Float extends BaseFunction2 {
 
             @Override
             public Chromosome createNew() {
-                return new Chromosome(chromosomeSize) {
-
-                    @Override
-                    public Chromosome initialise() {
-                        genes = new Float[chromosomeSize];
-                        for (int i = 0; i < chromosomeSize; i++) {
-                            genes[i] = seed.nextFloat() * 31 - 15;
-                        }
-                        return this;
-                    }
+                return new BinaryChromosome(seed, chromosomeSize) {
 
                     @Override
                     public double evaluate() {
@@ -85,8 +78,7 @@ public class Function2Float extends BaseFunction2 {
 
     @Override
     public void setupMutation() {
-        mutation = new FloatGaussianMutation(seed,
+        mutation = new BinaryMutation(seed,
                 mutationProbability);
     }
-
 }

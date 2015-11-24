@@ -1,4 +1,4 @@
-package geneticAlgorithm.function3;
+package ga.function3;
 
 import java.util.Random;
 import selection.BestOfFour;

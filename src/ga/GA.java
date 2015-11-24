@@ -1,4 +1,4 @@
-package geneticAlgorithm;
+package ga;
 
 import java.util.Random;
 import java.util.ArrayList;
