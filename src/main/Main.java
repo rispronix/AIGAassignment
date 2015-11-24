@@ -20,9 +20,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Random seed = new Random(1);
-//        Random seed = new Random(System.currentTimeMillis());
-//
+//        Random seed = new Random(1);
+        Random seed = new Random(System.currentTimeMillis());
+
         System.out.print("\nExperiment 1: Function1");
         new AverageNRuns(10, new Function1(seed, 50, 50, 0.9, 0.5));
 
