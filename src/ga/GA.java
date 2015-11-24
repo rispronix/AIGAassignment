@@ -7,6 +7,7 @@ import comparators.FitnessComparator;
 import fitness.FitnessFunction;
 import chromosomes.ChromosomeFactory;
 import chromosomes.Chromosome;
+import fileWriter.WriteToCSV;
 import mutation.Mutation;
 import population.Population;
 import population.PopulationFactory;
@@ -102,7 +103,7 @@ public abstract class GA {
                 recombinationProbability,
                 populationSize));
         
-        for (int i = 1; i < generationCount; i++) {
+        for (int i = 1; i <= generationCount; i++) {
             population = selection.select(population);
             population = recombination.recombine(population);
             population = mutation.mutate(population);
@@ -115,6 +116,7 @@ public abstract class GA {
                     mutationProbability,
                     recombinationProbability,
                     populationSize));
+//            new WriteToCSV().WriteToCSV(stats);
         }
     }
 

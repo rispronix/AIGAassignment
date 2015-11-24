@@ -27,7 +27,6 @@ public class RunStatistics {
         this.mutationProbability = mutationProbability;
         this.recombinationProbability = recombinationProbability;
         this.populationSize = populationSize;
-//        System.out.println(toString());
     }
     
     public Chromosome getBest() {
