@@ -11,27 +11,27 @@ import recombination.SinglePointCrossover;
  *
  * @author rich
  */
-public class Function2Float extends BaseFunction2 {
+public class Function2FloatGaussianDistMutation extends BaseFunction2 {
 
     /*
      hardcoded as only two variables needed
      */
     protected final int chromosomeSize = 2;
 
-    public Function2Float(Random seed) {
+    public Function2FloatGaussianDistMutation(Random seed) {
         super(seed);
-        title = "Function2Float";
+        title = "Function2FloatGaussianMutation";
     }
 
-    public Function2Float(Random seed,
+    public Function2FloatGaussianDistMutation(Random seed,
             double recombinationProbability,
             double mutationProbability) {
         super(seed, recombinationProbability,
                 mutationProbability);
-        title = "Function2Float";
+        title = "Function2FloatGaussianMutation";
     }
 
-    public Function2Float(Random seed,
+    public Function2FloatGaussianDistMutation(Random seed,
             int generationCount,
             int populationSize,
             double recombinationProbability,
@@ -40,7 +40,7 @@ public class Function2Float extends BaseFunction2 {
                 populationSize,
                 recombinationProbability,
                 mutationProbability);
-        title = "Function2Float";
+        title = "Function2FloatGaussianMutation";
     }
 
     @Override

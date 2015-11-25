@@ -24,14 +24,22 @@ public class WriteToFile {
             writer.append("#mutationProbability" + stats.get(0).getMutationProbability());
             writer.append("\n#recobminationProbability" + stats.get(0).getRecombinationProbability());
             writer.append("\n#populationSize" + stats.get(0).getPopulationSize());
-            writer.append("\ngeneration\taverage\tbest\n");
+            writer.append("\ngeneration\taverage\taverageStdDev\taverageVariance\tbest\tbestStdDev\tbestVariance\n");
 
             for (int i = 0; i < stats.size(); i++) {
                 writer.append(String.valueOf(stats.get(i).getGeneration()));
                 writer.append('\t');
                 writer.append(String.valueOf(stats.get(i).getAverage()));
                 writer.append('\t');
+                writer.append(String.valueOf(stats.get(i).getAveragesd()));
+                writer.append('\t');
+                writer.append(String.valueOf(stats.get(i).getAverageVar()));
+                writer.append('\t');
                 writer.append(String.valueOf(stats.get(i).getAverageFitness()));
+                writer.append('\t');
+                writer.append(String.valueOf(stats.get(i).getAverageVar()));
+                writer.append('\t');
+                writer.append(String.valueOf(stats.get(i).getFitnesssd()));
                 writer.append('\n');
             }
 

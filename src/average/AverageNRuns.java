@@ -26,7 +26,7 @@ public class AverageNRuns {
             sum += function.getBest().fitness();
             System.out.printf("\nBest of run %d:\t" + function.getBest().toString(), i);
             function.resetBest();
-//            new WriteToCSV().WriteToCSV(function.getStats());
+//            new WriteToFile().WriteRunToFile(function.getStats());
         }
 
         double average = sum / numberOfRunsToAverage;
@@ -34,21 +34,30 @@ public class AverageNRuns {
         calculateAverageOfNRuns();
     }
 
-    double fitnessSum = 0;
-    double fitnessAverage = 0;
+    double fitnessSum = 0, fitnessAverage = 0, fitnesssd = 0, averagesd = 0,fitnessVar=0,averageVar=0;
     ArrayList<RunStatistics> averageRuns;
 
     public void calculateAverageOfNRuns() {
 
         averageRuns = new ArrayList<>();
         for (int i = 0; i < runs.get(0).size(); i++) {
-            fitnessSum = 0;
-            fitnessAverage = 0;
+            fitnessSum = fitnesssd = fitnessAverage = averagesd = fitnessVar=averageVar=0;
             for (int j = 0; j < runs.size(); j++) {
                 fitnessSum += runs.get(j).get(i).getBest().fitness();
                 fitnessAverage += runs.get(j).get(i).getAverage();
             }
-            averageRuns.add(new RunStatistics(i, fitnessAverage / numberOfRunsToAverage, fitnessSum / numberOfRunsToAverage, runs.get(0).get(0).getMutationProbability(), runs.get(0).get(0).getRecombinationProbability(), runs.get(0).get(0).getPopulationSize(), runs.get(0).get(0).getTitle()));
+            fitnessSum = fitnessSum / numberOfRunsToAverage;
+            fitnessAverage = fitnessAverage / numberOfRunsToAverage;
+
+            for (int j = 0; j < runs.size(); j++) {
+                averagesd = Math.pow(runs.get(j).get(i).getAverage() - fitnessAverage, 2);
+                fitnesssd = Math.pow(runs.get(j).get(i).getBest().fitness() - fitnessSum, 2);
+            }
+            averagesd = Math.sqrt(averagesd / numberOfRunsToAverage);
+            fitnesssd = Math.sqrt(fitnesssd / numberOfRunsToAverage);
+            fitnessVar = fitnesssd*fitnesssd;
+            averageVar=averagesd*averagesd;
+            averageRuns.add(new RunStatistics(i, fitnessAverage, fitnessSum, averagesd,fitnesssd,fitnessVar,averageVar,runs.get(0).get(0).getMutationProbability(), runs.get(0).get(0).getRecombinationProbability(), runs.get(0).get(0).getPopulationSize(), runs.get(0).get(0).getTitle()));
         }
         new WriteToFile().WriteAverageToFile(averageRuns);
     }
